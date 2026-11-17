@@ -57,7 +57,15 @@ button{background:none;border:0;cursor:pointer}
 .layer{position:absolute;inset:0}
 .layer>img{width:100%;height:100%;object-fit:cover}
 .cave-img{will-change:transform}
-.cave-img img{object-position:50% 24%}
+.dual .fill{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(30px) saturate(1.2) brightness(.72);transform:scale(1.18)}
+.dual .main{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cave-img .main,.cave-img .fill{object-position:50% 24%}
+.tunnel-wrap .main,.tunnel-wrap .fill{object-position:50% 57%}
+@media (min-aspect-ratio:3/5){.cave-img .main{inset:auto;top:0;left:50%;width:auto;height:100%;transform:translateX(-50%);object-fit:cover;-webkit-mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent),linear-gradient(180deg,#000 82%,transparent 97%);-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent),linear-gradient(180deg,#000 82%,transparent 97%);mask-composite:intersect}}
+@media (min-aspect-ratio:93/100){.tunnel-wrap .main{inset:auto;top:0;left:50%;width:auto;height:100%;transform:translateX(-50%);object-fit:cover;-webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent);mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent)}}
+.flash{opacity:0;pointer-events:none;background:radial-gradient(circle at var(--fx,50%) var(--fy,55%),#fffdf6 0%,rgba(255,246,224,.96) 9%,rgba(255,230,190,.6) 24%,rgba(255,214,170,.18) 42%,transparent 60%);transform-origin:var(--fx,50%) var(--fy,55%);will-change:opacity,transform}
+.rays{opacity:0;pointer-events:none;mix-blend-mode:screen;background:repeating-conic-gradient(from var(--ra,0deg) at var(--fx,50%) var(--fy,55%),rgba(255,247,226,.5) 0deg 2.5deg,transparent 2.5deg 12deg);-webkit-mask-image:radial-gradient(circle at var(--fx,50%) var(--fy,55%),#000 0%,rgba(0,0,0,.55) 28%,transparent 62%);mask-image:radial-gradient(circle at var(--fx,50%) var(--fy,55%),#000 0%,rgba(0,0,0,.55) 28%,transparent 62%);will-change:opacity}
+.whiteout{background:#fff8ec;opacity:0;pointer-events:none}
 .cave-shade{background:radial-gradient(ellipse 60% 34% at 50% 64%,rgba(4,9,30,.55),transparent 75%),radial-gradient(ellipse 70% 60% at 50% 26%,transparent 25%,rgba(4,9,30,.62) 88%),linear-gradient(180deg,rgba(7,11,22,.55),transparent 22%,transparent 55%,rgba(7,11,22,.75))}
 .dark{background:var(--night);opacity:0;pointer-events:none}
 .beat-wrap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding-top:26vh;pointer-events:none}
@@ -70,7 +78,7 @@ button{background:none;border:0;cursor:pointer}
 .stat{background:rgba(8,14,34,.5);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.14);border-radius:22px;padding:18px 12px 16px}
 .stat b{display:block;font-family:var(--serif);font-size:clamp(30px,3.6vw,50px);font-weight:400;color:var(--gold);line-height:1.1;font-variation-settings:"SOFT" 100}
 .stat span{display:block;margin-top:6px;font-size:13px;line-height:1.45;color:var(--muted)}
-@media(max-width:720px){.stats{grid-template-columns:repeat(2,1fr)}.beat-wrap{padding-top:10vh}}
+@media(max-width:720px){.stats{grid-template-columns:repeat(2,1fr)}.beat-wrap{padding-top:10vh}.cave-shade{background:radial-gradient(ellipse 95% 50% at 50% 58%,rgba(4,9,30,.72),transparent 80%),linear-gradient(180deg,rgba(7,11,22,.55),transparent 22%,transparent 55%,rgba(7,11,22,.75))}}
 
 .tunnel-wrap{will-change:transform}
 .tunnel-text{position:absolute;inset:0;display:flex;align-items:flex-start;justify-content:center;padding-top:15vh;pointer-events:none}
@@ -108,7 +116,7 @@ button{background:none;border:0;cursor:pointer}
 /* ---------- chapter panel ---------- */
 .panel{position:fixed;inset:0;z-index:45;visibility:hidden;opacity:0}
 .panel-bg{position:absolute;inset:0;overflow:hidden}
-.panel-bg img{width:100%;height:100%;object-fit:cover;animation:drift 30s ease-in-out infinite alternate}
+.panel-bg img{width:100%;height:100%;object-fit:cover;filter:blur(1.2px);animation:drift 30s ease-in-out infinite alternate}
 @keyframes drift{from{transform:scale(1.08) translate3d(0,0,0)}to{transform:scale(1.16) translate3d(-1.5%,-3%,0)}}
 .panel-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(5,9,22,.93) 0%,rgba(5,9,22,.78) 50%,rgba(5,9,22,.5) 100%)}
 .panel-scroll{position:absolute;inset:0;overflow-y:auto;overscroll-behavior:contain;padding:84px 0 130px}
@@ -226,17 +234,17 @@ select option{background:#121a33}
 .ep-copy h2 em{color:var(--gold)}
 .ep-copy p{font-size:17px;line-height:1.7}
 @media(max-width:760px){.ep-copy{justify-content:center;padding-bottom:12vh}}
-#credits{position:relative;padding:120px 6vw 140px;background:radial-gradient(ellipse 70% 50% at 50% 0%,#141b38,var(--night) 70%)}
+#credits{position:relative;padding:90px 6vw 110px;background:radial-gradient(ellipse 70% 50% at 50% 0%,#141b38,var(--night) 70%)}
 .cred{max-width:860px;margin:0 auto}
 .cred h2{font-family:var(--serif);font-weight:400;font-size:clamp(38px,5vw,68px);line-height:1.04;font-variation-settings:"SOFT" 100;margin:.25em 0 .5em}
 .cred h2 em{color:#f8c9f0}
 .cred>p{font-size:17px;line-height:1.7;color:rgba(251,243,228,.86);max-width:680px}
-.cred ul{list-style:none;margin:34px 0;display:grid;gap:12px}
-.cred li{display:grid;grid-template-columns:190px 1fr;gap:16px;padding:16px 0;border-top:1px solid rgba(255,255,255,.1);font-size:15px;line-height:1.6}
+.cred ul{list-style:none;margin:22px 0 18px;display:grid;gap:0}
+.cred li{display:grid;grid-template-columns:190px 1fr;gap:16px;padding:12px 0;border-top:1px solid rgba(255,255,255,.1);font-size:15px;line-height:1.6}
 .cred li b{font-weight:800;color:var(--gold);font-size:12px;letter-spacing:.14em;text-transform:uppercase;padding-top:3px}
 @media(max-width:640px){.cred li{grid-template-columns:1fr;gap:4px}}
 .cred .small{font-size:13.5px;color:var(--muted);line-height:1.65}
-.cred .end{margin-top:46px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.cred .end{margin-top:30px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
 .cred .end p{font-family:var(--serif);font-style:italic;font-size:22px;font-variation-settings:"SOFT" 100}
 
 /* ---------- bunny buddy ---------- */
@@ -252,8 +260,26 @@ select option{background:#121a33}
 .bubble small{display:block;font-size:11px;color:#6b6a80;margin-top:4px;font-weight:700}
 .spark{position:fixed;z-index:69;pointer-events:none;color:#ffd98a;font-size:12px;text-shadow:0 0 8px #ffb84d;left:0;top:0}
 
+.snd{display:flex;align-items:center;gap:7px}
+.snd .bars{display:inline-flex;gap:2px;align-items:flex-end;height:12px;width:14px}
+.snd .bars i{display:block;width:2px;height:3px;background:currentColor;border-radius:1px;transition:height .3s}
+.snd.on{opacity:1;color:var(--gold)}
+.snd.on .bars i{animation:eq 1.1s ease-in-out infinite}
+.snd.on .bars i:nth-child(2){animation-delay:-.4s}.snd.on .bars i:nth-child(3){animation-delay:-.75s}.snd.on .bars i:nth-child(4){animation-delay:-.2s}
+@keyframes eq{0%,100%{height:3px}50%{height:12px}}
+@media(max-width:560px){.snd .bars{display:none}.snd .lab{font-size:14px}}
 @media (prefers-reduced-motion: reduce){
   .pin .in::before,#buddy .idle,.panel-bg img,.cue i{animation:none}
+}
+@media(max-aspect-ratio:1/1){.hero-bg img{object-position:63% 62%}}
+@media(max-width:600px){
+  #buddy{width:50px;height:48px;bottom:12px}
+  .bubble{font-size:12.5px;max-width:min(220px,64vw);padding:8px 12px}
+  #map{min-height:auto;padding:84px 0 48px}
+  .map-cam{width:100vw}
+  .lbl .in{font-size:max(10.5px,1.55cqw);padding:3px 8px 4px}
+  .lbl small{font-size:max(8.5px,1.1cqw)}
+  .map-hint{font-size:12.5px}
 }
 @media(max-width:560px){.brand{font-size:18px}.topnav button{padding:6px 10px;font-size:11.5px}.topbar{padding:12px 14px}}
 </style>
@@ -263,6 +289,7 @@ select option{background:#121a33}
 <header class="topbar">
   <div class="brand">Parnika <span>·</span> Kumar</div>
   <nav class="topnav" aria-label="Sections">
+    <button class="snd" id="snd" aria-label="Turn music on or off"><span class="bars"><i></i><i></i><i></i><i></i></span><span class="lab">Sound off</span></button>
     <button data-go="#prologue">Story</button>
     <button data-go="#map">Map</button>
     <button data-go="#credits">Credits</button>
@@ -288,7 +315,7 @@ select option{background:#121a33}
 <!-- PROLOGUE -->
 <section id="prologue" class="scene">
   <div class="sticky">
-    <div class="layer cave-img"><img src="cave.jpg" alt="White birds fly up through a dark blue cave toward a bright opening of light."></div>
+    <div class="layer cave-img dual"><img class="fill" src="cave.jpg" alt=""><img class="main" src="cave.jpg" alt="White birds fly up through a dark blue cave toward a bright opening of light."></div>
     <div class="layer cave-shade"></div>
     <div class="beat-wrap">
       <div class="beat"><p class="k">Prologue</p><h2>Every map starts <em>somewhere.</em></h2><p>Mine starts in Jamshedpur. Scroll slowly — the birds know the way.</p></div>
@@ -310,10 +337,11 @@ select option{background:#121a33}
 <!-- TUNNEL -->
 <section id="tunnel" class="scene">
   <div class="sticky">
-    <div class="layer tunnel-wrap"><img src="tunnel.jpg" alt="A grassy path curls into a spiral tunnel of green hills opening onto clouds."></div>
+    <div class="layer tunnel-wrap dual"><img class="fill" src="tunnel.jpg" alt=""><img class="main" src="tunnel.jpg" alt="A grassy path curls into a spiral tunnel of green hills opening onto clouds."></div>
     <div class="tunnel-text"><div><h2>Go through.</h2><p>the map is on the other side</p></div></div>
-    <div class="layer dark" id="tunnelIn" style="opacity:1"></div>
     <div class="layer dark" id="tunnelOut"></div>
+    <div class="layer flash" id="flash"></div><div class="layer rays" id="rays"></div><div class="layer whiteout" id="whiteout"></div>
+    <div class="layer dark" id="tunnelIn" style="opacity:1"></div>
   </div>
 </section>
 
@@ -351,20 +379,19 @@ select option{background:#121a33}
 <section id="credits">
   <div class="cred">
     <p class="k">The last page</p>
-    <h2>The art in this storybook <em>isn't mine.</em></h2>
-    <p>I'm not a UI/UX designer, and I didn't want to pretend to be one. Every landscape here comes from <b>Sky: Children of Light</b> — my favourite game, and the reason this site exists in this shape. The code, the words and the journey are mine; the light belongs to the people below.</p>
+    <h2>The art isn’t mine — <em>the story is.</em></h2>
     <ul>
-      <li><b>World &amp; art</b><span>Sky: Children of Light © thatgamecompany — the landscapes, the jellyfish, the spiral path, the paper-boat illustration and my bunny travel buddy all come from their game and its world.</span></li>
-      <li><b>World map</b><span>Infographic by the <i>Sky: COTL Infographic Database</i> Discord server. I relabelled the regions with my own chapters.</span></li>
-      <li><b>Cave of birds</b><span>Screenshot by Douyin creator 49256098355.</span></li>
-      <li><b>Inspiration</b><span>The opening feeling was inspired by Lusion's <i>My Little Storybook</i>.</span></li>
-      <li><b>Built with</b><span>HTML, CSS and JavaScript · GSAP + ScrollTrigger · Lenis smooth scroll · Fraunces &amp; Nunito typefaces.</span></li>
+      <li><b>World, art &amp; music</b><span>Sky: Children of the Light © thatgamecompany. Music: “Rain Transform” from the game’s soundtrack by Vincent Diamante (gamerip via KHInsider).</span></li>
+      <li><b>Map &amp; cave</b><span>Map infographic by the <i>Sky: COTL Infographic Database</i> Discord server, relabelled with my chapters · cave screenshot by Douyin creator 49256098355.</span></li>
+      <li><b>Inspiration</b><span>Lusion’s <i>My Little Storybook</i>.</span></li>
     </ul>
-    <p class="small">This is a personal, non-commercial fan tribute. All game art and trademarks belong to their owners. If you made any of these images and want them credited differently or removed, please write to me and I'll fix it the same day.</p>
+    <p class="small">A personal, non-commercial fan tribute. If any of this is yours and you’d like it credited differently or removed, write to me and I’ll fix it.</p>
     <div class="end"><p>Go play Sky. ✦</p><button class="pill" data-go="#hero">Back to the beginning ↑</button></div>
   </div>
 </section>
 </main>
+
+<audio id="bgm" src="music.mp3" loop preload="none"></audio>
 
 <!-- CHAPTER PANEL -->
 <div class="panel" id="panel" role="dialog" aria-modal="true" aria-label="Chapter">
@@ -373,7 +400,7 @@ select option{background:#121a33}
 </div>
 
 <!-- BUNNY -->
-<div id="buddy" role="button" tabindex="0" aria-label="Bunny travel buddy. Click to talk, double-click to make it hop.">
+<div id="buddy" role="button" tabindex="0" aria-label="Bunny travel buddy. Click to talk, double-click or double-tap to make it hop.">
   <div class="bubble" id="bubble"><p></p></div>
   <div class="shadow"></div>
   <div class="bun"><div class="idle"><img src="bunny.png" alt=""></div></div>
@@ -449,7 +476,7 @@ function countUp(){ if(counted) return; counted=true;
 (()=>{
   const beats=$$('.beat'), D=10, seg=D/beats.length;
   const tl=gsap.timeline({scrollTrigger:{trigger:'#prologue',start:'top top',end:'bottom bottom',scrub:1.2}});
-  tl.fromTo('.cave-img',{scale:1.32,yPercent:4},{scale:1,yPercent:0,ease:'none',duration:D},0);
+  tl.fromTo('.cave-img',{scale:1.12,yPercent:2},{scale:1,yPercent:0,ease:'none',duration:D},0);
   beats.forEach((b,i)=>{const d=i%2?1:-1,t0=i*seg+(i===0?.15:0);
     tl.fromTo(b,{opacity:0,x:d*170,y:70,rotate:d*5,scale:.93,filter:'blur(16px)'},{opacity:1,x:0,y:0,rotate:0,scale:1,filter:'blur(0px)',duration:seg*.36,ease:'power2.out'},t0);
     if(i===3) tl.call(countUp,null,t0+seg*.2);
@@ -462,18 +489,29 @@ function countUp(){ if(counted) return; counted=true;
 /* ---------------- tunnel ---------------- */
 (()=>{
   const wrap=$('.tunnel-wrap');
-  const setOrigin=()=>{ // keep the zoom aimed at the tunnel's opening whatever the screen shape
-    const vw=innerWidth,vh=innerHeight,iw=720,ih=894,s=Math.max(vw/iw,vh/ih);
-    const ox=(vw-iw*s)*.5+432*s, oy=(vh-ih*s)*.57+528*s;
+  const sticky=$('#tunnel .sticky');
+  const setOrigin=()=>{ // keep the zoom (and the light) aimed at the tunnel's opening whatever the screen shape
+    const vw=innerWidth,vh=innerHeight,iw=720,ih=894,contain=vw/vh>=.93;
+    const s=contain?Math.min(vw/iw,vh/ih):Math.max(vw/iw,vh/ih);
+    const ox=(vw-iw*s)*.5+432*s, oy=(vh-ih*s)*(contain?.5:.57)+528*s;
     gsap.set(wrap,{transformOrigin:`${ox}px ${oy}px`});
+    sticky.style.setProperty('--fx',ox+'px'); sticky.style.setProperty('--fy',oy+'px');
   };
   setOrigin(); ScrollTrigger.addEventListener('refreshInit',setOrigin);
   const tl=gsap.timeline({scrollTrigger:{trigger:'#tunnel',start:'top top',end:'bottom bottom',scrub:1}});
   tl.to('#tunnelIn',{opacity:0,duration:1.2,ease:'power1.out'},0)
-    .fromTo(wrap,{scale:1,rotate:0},{scale:7.5,rotate:16,ease:'power2.in',duration:10},0)
-    .fromTo('.tunnel-text div',{opacity:0,y:30,filter:'blur(10px)'},{opacity:1,y:0,filter:'blur(0px)',duration:1.8,ease:'power2.out'},.8)
-    .to('.tunnel-text div',{opacity:0,scale:1.5,filter:'blur(14px)',duration:2},4.2)
-    .to('#tunnelOut',{opacity:1,duration:2.2,ease:'power1.in'},7.8);
+    .fromTo(wrap,{scale:1,rotate:0},{scale:2.5,rotate:9,ease:'power1.in',duration:7.2},0)
+    .fromTo('.tunnel-text div',{opacity:0,y:30,filter:'blur(10px)'},{opacity:1,y:0,filter:'blur(0px)',duration:1.6,ease:'power2.out'},.7)
+    .to('.tunnel-text div',{opacity:0,y:-20,filter:'blur(12px)',duration:1.6},3.4)
+    // the light: a glow grows out of the opening, rays turn, then everything goes white
+    .fromTo('#flash',{opacity:0,scale:.35},{opacity:1,scale:3.2,ease:'power2.in',duration:3},4.0)
+    .fromTo('#rays',{opacity:0,'--ra':'0deg'},{opacity:.85,'--ra':'38deg',ease:'power1.in',duration:3},4.3)
+    .fromTo('#whiteout',{opacity:0,backgroundColor:'#fff8ec'},{opacity:1,duration:1.1,ease:'power2.in'},6.4)
+    .set(['#rays','#flash'],{opacity:0},7.5)
+    // the light cools like a sky after sunset: cream → peach → dusk violet → the map's night
+    .to('#whiteout',{backgroundColor:'#f7cfb2',duration:.7,ease:'none'},7.55)
+    .to('#whiteout',{backgroundColor:'#4a3d6e',duration:1.0,ease:'power1.inOut'},8.25)
+    .to('#whiteout',{backgroundColor:'#070b16',duration:.9,ease:'power1.out'},9.25);
 })();
 
 /* ---------------- regions + chapters ---------------- */
@@ -487,6 +525,7 @@ const R={
  vault:{name:'Vault of Explanations',sub:'Springer paper · XAI',c:'#aab7ff',pin:[762,422],lbl:[906,365],w:23},
  eden:{name:'Eden',sub:'Summer 2027',c:'#ffb46e',pin:[526,298],lbl:[410,225],w:13}
 };
+const IMG='';
 const C={
  dawn:{kicker:'Pin 1 · Jamshedpur → Vellore · 2022 – now',title:'Isle of Beginnings',
   not:'Strong academic background.',
@@ -503,7 +542,7 @@ const C={
   plain:'<b>In plain words:</b> the robot looks at a patch of floor just ahead of it, finds where the line is, and turns toward it. Turn too gently and it misses the curves. Turn too hard and it wobbles. Getting this balance right is called tuning a controller.',
   fine:'A browser sketch of the idea behind the workshop robot. The real one used a camera on a Jetson Nano.',
   bunny:'Drag the steering slider all the way down… then all the way up. Find the sweet spot!'},
- prairie:{kicker:'Pin 2 · IEEE ICSCT 2026 · Conference No. 70031 · Published',title:'Prairie of Light',
+ prairie:{bg:'forest-pond.jpg',kicker:'Pin 2 · IEEE ICSCT 2026 · Conference No. 70031 · Published',title:'Prairie of Light',
   not:'Smart lighting system.',
   but:'Hospital light that changes with the hour and with the patient — because a dementia patient, an ICU patient and someone with migraines don’t need the same light at 3 a.m.',
   beats:[
@@ -518,7 +557,7 @@ const C={
   plain:'<b>In plain words:</b> pick a patient, an hour and how bright the room already is. The controller looks up that patient’s colour for that time of day, then dims it as the room gets brighter. The wavy lines are PWM — the light flicks on and off thousands of times a second, and the share of “on” time sets how bright it looks.',
   fine:'Simplified for the browser. Colour values are illustrative, not the paper’s tables.',
   bunny:'Set the hour to 3 a.m. and pick “Dementia”. Then make the room brighter and watch it dim.'},
- forest:{kicker:'Pin 3 · Vulcan International (Jindal Group) · Moatize, Tete, Mozambique · June 2025',title:'Forest Across the Sea',
+ forest:{bg:'forest-rain.jpg',kicker:'Pin 3 · Vulcan International (Jindal Group) · Moatize, Tete, Mozambique · June 2025',title:'Forest Across the Sea',
   not:'Built an app during an internship.',
   but:'The Coal Production Plants were ordering materials by hand, and many of the people placing those orders work in Portuguese. I built the ordering app they could actually use.',
   beats:[
@@ -594,7 +633,8 @@ ORDER.forEach((id,i)=>{const r=R[id];
   const pin=document.createElement('button'); pin.className='pin'; pin.dataset.id=id; pin.style.cssText=`left:${r.pin[0]/10.8}%;top:${r.pin[1]/11.61}%;--c:${r.c};--d:${i*.35}s`;
   pin.setAttribute('aria-label',`Chapter ${i+1}: ${r.name} — ${r.sub}`); pin.innerHTML=`<span class="in"><i>${i+1}</i></span>`;
   const lbl=document.createElement('button'); lbl.className='lbl'; lbl.dataset.id=id; lbl.tabIndex=-1; lbl.setAttribute('aria-hidden','true');
-  lbl.style.cssText=`left:${r.lbl[0]/10.8}%;top:${r.lbl[1]/11.61}%;--c:${r.c};--w:${r.w}cqw`; lbl.innerHTML=`<span class="in">${r.name}<small>${r.sub}</small></span>`;
+  const lx=(innerWidth<600&&id==='forest')?168:r.lbl[0];
+  lbl.style.cssText=`left:${lx/10.8}%;top:${r.lbl[1]/11.61}%;--c:${r.c};--w:${r.w}cqw`; lbl.innerHTML=`<span class="in">${r.name}<small>${r.sub}</small></span>`;
   pinsEl.append(lbl,pin);
   [pin,lbl].forEach(el=>{el.addEventListener('click',()=>openRegion(id));
     el.addEventListener('pointerenter',()=>{$$(`[data-id="${id}"]`,pinsEl).forEach(x=>x.classList.add('hot'));});
@@ -626,6 +666,7 @@ function renderChapter(id){
   if(cleanup){cleanup();cleanup=null;}
   const r=R[id],c=C[id],i=ORDER.indexOf(id),prev=ORDER[i-1],next=ORDER[i+1];
   chapter.style.setProperty('--c',r.c);
+  const bgImg=$('.panel-bg img'), want=IMG+(c.bg||'jelly.jpg'); if(bgImg.getAttribute('src')!==want) bgImg.setAttribute('src',want);
   const left=c.cards
     ? `<div class="cards">${c.cards.map(k=>`<div class="card rv"><h4>${k[0]}</h4><p class="meta">${k[1]}</p><p>${k[2]}</p><span class="role">${k[3]}</span></div>`).join('')}</div>`
     : `<ul class="beats">${c.beats.map(b=>`<li class="rv">${b}</li>`).join('')}</ul>`;
@@ -671,7 +712,9 @@ function openRegion(id){
 }
 function switchRegion(id){
   if(busy) return; busy=true;
+  gsap.to('.panel-bg img',{opacity:0,duration:.45,ease:'power2.in'});
   gsap.to(chapter,{opacity:0,y:-20,filter:'blur(8px)',duration:.45,ease:'power2.in',onComplete:()=>{
+    gsap.to('.panel-bg img',{opacity:1,duration:.9,ease:'power2.out',delay:.05});
     $$('.hot',pinsEl).forEach(x=>x.classList.remove('hot'));
     current=id; gsap.set(cam,camTo(id,3.1)); renderChapter(id);
     gsap.set(chapter,{opacity:1,y:0,filter:'none'}); revealChapter(0); busy=false;}});
@@ -887,6 +930,21 @@ const DEMOS={
  }
 };
 
+/* ---------------- music ---------------- */
+(()=>{
+  const bgm=$('#bgm'),snd=$('#snd'),lab=$('.lab',snd); let want=true;
+  try{ if(localStorage.getItem('pk-sound')==='off') want=false; }catch(e){}
+  const ui=on=>{snd.classList.toggle('on',on); lab.textContent=innerWidth<=560?(on?'♪ on':'♪'):(on?'Sound on':'Sound off');};
+  ui(false);
+  const play=async()=>{ try{ bgm.volume=0; await bgm.play(); ui(true); gsap.to(bgm,{volume:.5,duration:3,ease:'power1.out'}); }catch(e){ ui(false); } };
+  const stop=()=>{ ui(false); gsap.to(bgm,{volume:0,duration:.9,onComplete:()=>bgm.pause()}); };
+  snd.addEventListener('click',e=>{ e.stopPropagation(); const on=!snd.classList.contains('on'); try{localStorage.setItem('pk-sound',on?'on':'off');}catch(_){} on?play():stop(); });
+  // browsers only allow sound after the visitor interacts, so it fades in on their first click, tap or key press
+  const first=e=>{ removeEventListener('pointerdown',first,true); removeEventListener('keydown',first,true);
+    if(e.target.closest && e.target.closest('#snd')) return; if(want && bgm.paused) play(); };
+  addEventListener('pointerdown',first,true); addEventListener('keydown',first,true);
+})();
+
 /* ---------------- epilogue ---------------- */
 gsap.timeline({scrollTrigger:{trigger:'#epilogue',start:'top top',end:'bottom bottom',scrub:1}})
   .fromTo('.boats',{scale:1.18,xPercent:3},{scale:1,xPercent:0,ease:'none',duration:10},0)
@@ -897,21 +955,22 @@ gsap.from('.cred>*',{opacity:0,y:40,filter:'blur(8px)',stagger:.1,duration:1,eas
 const buddy=(()=>{
   const el=$('#buddy'),bun=$('.bun',el),bub=$('#bubble'),txt=$('p',bub);
   let x=0,busy=false,hideT,ctx='hero',lineIdx=0,entered=false;
+  const touch=matchMedia('(pointer:coarse)').matches, dbl=touch?'double-tap':'double-click', small=innerWidth<600;
   const LINES={
-   hero:['Hi! I’m your travel buddy. I’ll walk you through Parnika’s story — scroll down when you’re ready.','<small>psst… double-click me and I’ll hop</small>'],
+   hero:['Hi! I’m your travel buddy. I’ll walk you through Parnika’s story — scroll down when you’re ready.','Hear that? That’s “Rain Transform” from Sky. The ♪ button up top turns it off.',`<small>psst… ${dbl} me and I’ll hop</small>`],
    prologue:['This is where it started. Keep scrolling slowly — the birds know the way.'],
    tunnel:['Hold on to your ears — we’re going through!'],
    map:['Each glowing pin is a chapter. Tap one and we’ll fly in.','The dotted line is the route. Start at pin 1 if you like things in order.'],
    epilogue:['That’s the story so far. Parnika’s email is right there →'],
    credits:['The art belongs to thatgamecompany. Go play Sky! ✦']};
-  const IDLE=['Double-click me and I’ll hop!','Every pin on the map has something you can try.','The art is from Sky: Children of Light — credits on the last page.','I’ve been told I’m the most important part of this website.'];
-  const W=()=>innerWidth, homeX=()=>W()-62-22;
+  const IDLE=[`${dbl[0].toUpperCase()+dbl.slice(1)} me and I’ll hop!`,'Every pin on the map has something you can try.','The art is from Sky: Children of the Light — credits on the last page.','I’ve been told I’m the most important part of this website.'];
+  const W=()=>innerWidth, homeX=()=>W()-(small?50:62)-(small?14:22);
   function place(){gsap.set(el,{x});el.classList.toggle('left',x<W()/2);}
-  function say(html,force){clearTimeout(hideT);txt.innerHTML=html;bub.classList.add('show');hideT=setTimeout(()=>bub.classList.remove('show'),force?7000:5600);}
+  function say(html,force){clearTimeout(hideT);txt.innerHTML=html;bub.classList.add('show');hideT=setTimeout(()=>bub.classList.remove('show'),small?(force?4500:3800):(force?7000:5600));}
   function sparkle(){const r=el.getBoundingClientRect();for(let i=0;i<7;i++){const s=document.createElement('span');s.className='spark';s.textContent='✦';document.body.appendChild(s);
       const a=Math.PI+Math.random()*Math.PI,d=24+Math.random()*30;gsap.fromTo(s,{x:r.left+r.width/2-5,y:r.bottom-12,scale:.4+Math.random()*.6,opacity:1},{x:`+=${Math.cos(a)*d}`,y:`+=${Math.sin(a)*d}`,opacity:0,rotate:Math.random()*180,duration:.8+Math.random()*.4,ease:'power2.out',onComplete:()=>s.remove()});}}
   function hop(to){if(busy)return;busy=true;bub.classList.remove('show');
-    const w=W(); const nx=to??clamp(x+(Math.random()<.5?-1:1)*(70+Math.random()*Math.min(260,w*.3)),10,w-72); const dir=Math.sign(nx-x)||1;
+    const w=W(); const nx=to??clamp(x+(Math.random()<.5?-1:1)*(70+Math.random()*Math.min(260,w*.3)),10,w-(small?60:72)); const dir=Math.sign(nx-x)||1;
     const tl=gsap.timeline({onComplete:()=>{busy=false;}});
     tl.to(bun,{scaleX:1.2,scaleY:.78,duration:.13,ease:'power2.out'})
       .addLabel('j')
@@ -926,13 +985,13 @@ const buddy=(()=>{
   function talk(){const L=LINES[ctx]||[];const pool=[...L,...IDLE];say(pool[lineIdx++%pool.length]);}
   function setContext(k,quiet){if(k===ctx&&!quiet)return;ctx=k;if(entered&&!panelOpen&&!quiet)say(LINES[k][0]);}
   function enter(){if(entered)return;entered=true;x=W()+30;place();gsap.set(el,{opacity:1});
-    hop(homeX()).add(()=>say(LINES.hero[0]+'<small>double-click me and I’ll hop</small>',true));}
+    hop(homeX()).add(()=>say(LINES.hero[0]+`<small>${dbl} me and I’ll hop</small>`,true));}
   // click = talk, double-click / double-tap = hop
   let lastUp=0,talkT;
   el.addEventListener('pointerup',()=>{const now=performance.now();
     if(now-lastUp<320){clearTimeout(talkT);lastUp=0;hop();}else{lastUp=now;talkT=setTimeout(talk,320);}});
   el.addEventListener('keydown',e=>{if(e.key==='Enter')talk();if(e.key===' '){e.preventDefault();hop();}});
-  addEventListener('resize',()=>{x=clamp(x,10,W()-72);place();});
+  addEventListener('resize',()=>{x=clamp(x,10,W()-(small?60:72));place();});
   ['prologue','tunnel','map','epilogue','credits','hero'].forEach(id=>ScrollTrigger.create({trigger:'#'+id,start:'top 55%',end:'bottom 45%',onToggle:s=>{if(s.isActive)setContext(id);}}));
   return {enter,say,setContext,hop};
 })();
