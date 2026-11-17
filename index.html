@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parnika Kumar — a storybook portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..600,100;1,9..144,300..600,100&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--night:#070b16;--cream:#fbf3e4;--peach:#f4c1a8;--gold:#f6d58e;--sky:#a9d2ee;--muted:rgba(251,243,228,.7);
+--serif:'Fraunces',Georgia,'Times New Roman',serif;--sans:'Nunito',system-ui,-apple-system,'Segoe UI',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--night)}
+body{font-family:var(--sans);color:var(--cream);background:var(--night);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+.lenis.lenis-stopped{overflow:hidden}
+img{display:block;max-width:100%}
+button,input,select{font:inherit;color:inherit}
+button{background:none;border:0;cursor:pointer}
+.serif{font-family:var(--serif);font-variation-settings:"SOFT" 100}
+
+/* ---------- top bar ---------- */
+.progress{position:fixed;left:0;top:0;height:2px;width:100%;background:linear-gradient(90deg,var(--peach),var(--gold),var(--sky));transform-origin:0 50%;transform:scaleX(0);z-index:61}
+.topbar{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;justify-content:space-between;align-items:center;padding:16px 24px;pointer-events:none}
+.brand{pointer-events:auto;font-family:var(--serif);font-style:italic;font-size:21px;font-variation-settings:"SOFT" 100;text-shadow:0 2px 14px rgba(7,11,22,.5);letter-spacing:.01em}
+.brand span{color:var(--gold)}
+.topnav{pointer-events:auto;display:flex;gap:4px;background:rgba(10,15,31,.38);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:4px}
+.topnav button{padding:7px 14px;border-radius:999px;font-size:12.5px;font-weight:800;letter-spacing:.05em;opacity:.78;transition:background .3s,opacity .3s}
+.topnav button:hover,.topnav button.on{background:rgba(251,243,228,.14);opacity:1}
+
+/* ---------- hero ---------- */
+#hero{position:relative;height:100vh;height:100svh;overflow:hidden}
+.hero-bg{position:absolute;inset:-2%;will-change:transform}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 62%;will-change:transform}
+.hero-shade{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 52% 40% at 50% 45%,rgba(24,34,64,.32),transparent 72%),linear-gradient(180deg,rgba(7,11,22,.25) 0%,transparent 18%,transparent 62%,rgba(7,11,22,.65) 100%)}
+#motes{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero-center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding-bottom:8vh;pointer-events:none}
+.hero-copy{text-align:center;width:min(92vw,1000px)}
+.eyebrow{font-weight:800;font-size:12px;letter-spacing:.34em;text-transform:uppercase;text-shadow:0 2px 12px rgba(7,11,22,.6)}
+.title{font-family:var(--serif);font-weight:400;font-size:clamp(66px,12.6vw,196px);line-height:.9;letter-spacing:-.025em;margin:.12em 0 .1em;font-variation-settings:"SOFT" 100,"opsz" 144;text-shadow:0 8px 50px rgba(30,18,40,.45)}
+.title .word{display:inline-block;white-space:nowrap}
+.title .ch{display:inline-block;will-change:transform}
+.title .it{font-style:italic;color:#ffe2c9}
+.sub{margin:18px auto 0;max-width:600px;font-size:clamp(15px,1.35vw,18px);line-height:1.65;text-shadow:0 2px 16px rgba(7,11,22,.75)}
+.cue{position:absolute;bottom:30px;left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:10px;font-size:11px;letter-spacing:.32em;text-transform:uppercase;font-weight:800;pointer-events:none}
+.cue i{display:block;width:1px;height:46px;background:linear-gradient(var(--cream),transparent);animation:cue 2.4s cubic-bezier(.6,0,.2,1) infinite;transform-origin:top}
+@keyframes cue{0%{transform:scaleY(0);opacity:1}55%{transform:scaleY(1);opacity:1}100%{transform:scaleY(1);opacity:0}}
+
+/* ---------- sticky scenes ---------- */
+.scene{position:relative}
+#prologue{height:560vh}
+#tunnel{height:330vh}
+#epilogue{height:230vh}
+.sticky{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+.layer{position:absolute;inset:0}
+.layer>img{width:100%;height:100%;object-fit:cover}
+.cave-img{will-change:transform}
+.cave-img img{object-position:50% 24%}
+.cave-shade{background:radial-gradient(ellipse 60% 34% at 50% 64%,rgba(4,9,30,.55),transparent 75%),radial-gradient(ellipse 70% 60% at 50% 26%,transparent 25%,rgba(4,9,30,.62) 88%),linear-gradient(180deg,rgba(7,11,22,.55),transparent 22%,transparent 55%,rgba(7,11,22,.75))}
+.dark{background:var(--night);opacity:0;pointer-events:none}
+.beat-wrap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding-top:26vh;pointer-events:none}
+.beat-wrap .beat{position:absolute;width:min(90vw,820px);text-align:center;opacity:0;will-change:transform,opacity,filter}
+.k{font-size:12px;letter-spacing:.3em;text-transform:uppercase;font-weight:800;color:var(--sky)}
+.beat h2{font-family:var(--serif);font-weight:400;font-size:clamp(42px,6.6vw,96px);line-height:1;letter-spacing:-.015em;margin:.22em 0 .32em;font-variation-settings:"SOFT" 100;text-shadow:0 6px 40px rgba(4,9,30,.6)}
+.beat h2 em{font-style:italic;color:var(--gold)}
+.beat p{font-size:clamp(16px,1.55vw,20px);line-height:1.65;max-width:620px;margin:0 auto;text-shadow:0 2px 18px rgba(4,9,30,.85)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:22px}
+.stat{background:rgba(8,14,34,.5);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.14);border-radius:22px;padding:18px 12px 16px}
+.stat b{display:block;font-family:var(--serif);font-size:clamp(30px,3.6vw,50px);font-weight:400;color:var(--gold);line-height:1.1;font-variation-settings:"SOFT" 100}
+.stat span{display:block;margin-top:6px;font-size:13px;line-height:1.45;color:var(--muted)}
+@media(max-width:720px){.stats{grid-template-columns:repeat(2,1fr)}.beat-wrap{padding-top:10vh}}
+
+.tunnel-wrap{will-change:transform}
+.tunnel-text{position:absolute;inset:0;display:flex;align-items:flex-start;justify-content:center;padding-top:15vh;pointer-events:none}
+.tunnel-text div{text-align:center;opacity:0;will-change:transform,opacity,filter}
+.tunnel-text h2{font-family:var(--serif);font-weight:400;font-style:italic;font-size:clamp(40px,6vw,88px);line-height:1;font-variation-settings:"SOFT" 100;text-shadow:0 4px 30px rgba(10,30,20,.65)}
+.tunnel-text p{margin-top:12px;font-weight:700;font-size:15px;text-shadow:0 2px 14px rgba(10,30,20,.8)}
+
+/* ---------- map ---------- */
+#map{position:relative;min-height:100vh;min-height:100svh;background:var(--night);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:64px 0 28px;overflow:hidden}
+.map-cam{position:relative;width:min(94vw,calc((100vh - 118px) * 1080 / 1161));aspect-ratio:1080/1161;container-type:inline-size;will-change:transform}
+.map-art{position:absolute;inset:0;will-change:transform,opacity,filter}
+.map-art img{width:100%;height:100%;filter:blur(.75px) saturate(1.08) brightness(.88)}
+.logo-cover{position:absolute;left:-1%;top:1%;width:38%;height:28%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;pointer-events:none;background:radial-gradient(ellipse 50% 50% at 50% 50%,rgba(8,11,22,.99) 60%,rgba(8,11,22,.85) 75%,rgba(8,11,22,0) 100%)}
+.logo-cover small{font-weight:800;font-size:clamp(7px,1.25cqw,13px);letter-spacing:.38em;text-transform:uppercase;opacity:.85}
+.logo-cover strong{display:block;font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(28px,7.6cqw,82px);line-height:1.05;font-variation-settings:"SOFT" 100;background:linear-gradient(120deg,#fff4d6 10%,#f8c9f0 50%,#a6e4ff 90%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 1.4cqw rgba(255,214,190,.5))}
+.logo-cover em{font-style:normal;font-weight:700;font-size:clamp(7px,1.2cqw,13px);opacity:.7;margin-top:.5cqw}
+.route{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.pin,.lbl{position:absolute;left:0;top:0}
+.pin{width:5cqw;height:5cqw;min-width:26px;min-height:26px;cursor:pointer;z-index:3}
+.pin .in{position:absolute;inset:0;display:grid;place-items:center;transition:transform .45s cubic-bezier(.2,.9,.3,1.4)}
+.pin .in::before{content:'';position:absolute;inset:-35%;border-radius:50%;border:1px solid var(--c);opacity:0;animation:ping 2.6s cubic-bezier(.2,.6,.3,1) infinite;animation-delay:var(--d)}
+.pin .in::after{content:'';position:absolute;inset:-60%;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--c) 45%,transparent),transparent 62%);pointer-events:none}
+.pin i{position:relative;z-index:1;width:56%;height:56%;border-radius:50%;background:var(--c);display:grid;place-items:center;font-style:normal;font-weight:800;font-size:clamp(9px,1.35cqw,15px);color:#0a0f1f;box-shadow:0 0 1.4cqw var(--c),0 0 3.6cqw color-mix(in srgb,var(--c) 60%,transparent)}
+@keyframes ping{0%{transform:scale(.45);opacity:.9}100%{transform:scale(1.25);opacity:0}}
+.pin:hover .in,.pin:focus-visible .in,.pin.hot .in{transform:scale(1.25)}
+.lbl{z-index:2;cursor:pointer}
+.lbl .in{display:block;min-width:var(--w);padding:.55cqw 1.4cqw .6cqw;border-radius:99px;background:rgba(8,11,22,.96);border:1px solid color-mix(in srgb,var(--c) 55%,transparent);color:var(--c);font-weight:800;font-size:clamp(9px,1.55cqw,17px);line-height:1.15;white-space:nowrap;text-align:center;box-shadow:0 0 2.2cqw rgba(0,0,0,.7),0 0 1.4cqw color-mix(in srgb,var(--c) 28%,transparent);transition:transform .45s cubic-bezier(.2,.9,.3,1.4),box-shadow .45s}
+.lbl small{display:block;font-weight:700;font-size:clamp(7.5px,1.1cqw,12.5px);color:rgba(251,243,228,.72);margin-top:.15em}
+.lbl:hover .in,.lbl:focus-visible .in,.lbl.hot .in{transform:scale(1.07);box-shadow:0 0 2.2cqw rgba(0,0,0,.7),0 0 2.6cqw color-mix(in srgb,var(--c) 55%,transparent)}
+.pin:focus-visible,.lbl:focus-visible{outline:none}
+.map-veil{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(255,240,220,.0),var(--night) 70%);opacity:0;pointer-events:none;z-index:5}
+.map-hint{margin-top:12px;font-size:13px;font-weight:700;color:var(--muted);text-align:center;padding:0 20px;line-height:1.5}
+.map-hint b{color:var(--cream)}
+
+/* ---------- chapter panel ---------- */
+.panel{position:fixed;inset:0;z-index:45;visibility:hidden;opacity:0}
+.panel-bg{position:absolute;inset:0;overflow:hidden}
+.panel-bg img{width:100%;height:100%;object-fit:cover;animation:drift 30s ease-in-out infinite alternate}
+@keyframes drift{from{transform:scale(1.08) translate3d(0,0,0)}to{transform:scale(1.16) translate3d(-1.5%,-3%,0)}}
+.panel-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(5,9,22,.93) 0%,rgba(5,9,22,.78) 50%,rgba(5,9,22,.5) 100%)}
+.panel-scroll{position:absolute;inset:0;overflow-y:auto;overscroll-behavior:contain;padding:84px 0 130px}
+.chapter{width:min(1180px,92vw);margin:0 auto}
+.pill{display:inline-flex;gap:8px;align-items:center;padding:9px 16px;border:1px solid rgba(255,255,255,.18);border-radius:99px;font-weight:800;font-size:13px;background:rgba(10,15,31,.45);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:background .3s,border-color .3s}
+.pill:hover{background:rgba(251,243,228,.12);border-color:rgba(255,255,255,.35)}
+.kicker{margin-top:34px;font-weight:800;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--c)}
+.chapter h2{font-family:var(--serif);font-weight:400;font-size:clamp(44px,6.2vw,92px);line-height:.98;letter-spacing:-.015em;margin:.18em 0 .38em;font-variation-settings:"SOFT" 100}
+.notbut{display:grid;gap:10px;max-width:860px;margin-bottom:42px}
+.not{font-size:15px;color:rgba(251,243,228,.5)}
+.not s{text-decoration-color:var(--c);text-decoration-thickness:2px}
+.not span{font-weight:800;letter-spacing:.14em;text-transform:uppercase;font-size:11px;margin-right:8px}
+.but{font-family:var(--serif);font-size:clamp(20px,2.15vw,28px);line-height:1.42;font-weight:300;font-variation-settings:"SOFT" 100}
+.but span{display:block;font-family:var(--sans);font-weight:800;letter-spacing:.14em;text-transform:uppercase;font-size:11px;color:var(--c);margin-bottom:4px}
+.cols{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:start}
+@media(max-width:920px){.cols{grid-template-columns:1fr;gap:36px}}
+.beats{list-style:none;display:grid;gap:20px}
+.beats li{position:relative;padding-left:32px;font-size:16.5px;line-height:1.72;color:rgba(251,243,228,.9)}
+.beats li::before{content:'';position:absolute;left:3px;top:.62em;width:10px;height:10px;border-radius:50%;background:var(--c);box-shadow:0 0 12px var(--c)}
+.beats li:not(:last-child)::after{content:'';position:absolute;left:7.5px;top:1.75em;bottom:-1.3em;width:1px;background:linear-gradient(var(--c),transparent);opacity:.45}
+.beats strong{color:#fff;font-weight:800}
+.beats .tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--c);margin-right:6px}
+.pstats{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:12px;margin-top:36px}
+.pstats div{border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:16px;background:rgba(10,15,31,.42)}
+.pstats b{display:block;font-family:var(--serif);font-weight:400;font-size:32px;line-height:1.1;color:var(--c);font-variation-settings:"SOFT" 100}
+.pstats span{display:block;margin-top:4px;font-size:12.5px;color:var(--muted);line-height:1.45}
+.demo{position:sticky;top:20px;--cc:var(--c);border-radius:26px;background:rgba(12,18,38,.66);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.14);padding:22px;box-shadow:0 30px 80px rgba(0,0,0,.4)}
+.demo-h{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}
+.demo-h h3{font-weight:800;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--c)}
+.demo-h span{font-size:11.5px;font-weight:700;color:var(--muted)}
+.plain{margin-top:16px;font-size:14px;line-height:1.62;color:rgba(251,243,228,.84);border-top:1px dashed rgba(255,255,255,.16);padding-top:14px}
+.plain b{color:var(--c)}
+.fine{font-size:11.5px;color:rgba(251,243,228,.5);margin-top:8px;line-height:1.5}
+.chap-nav{display:flex;justify-content:space-between;gap:12px;margin-top:70px;flex-wrap:wrap}
+.cards{display:grid;gap:14px}
+.card{border:1px solid rgba(255,255,255,.13);border-radius:20px;padding:18px 18px 16px;background:rgba(10,15,31,.42)}
+.card h4{font-family:var(--serif);font-weight:400;font-size:24px;font-variation-settings:"SOFT" 100;line-height:1.15}
+.card .meta{font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--c);margin:4px 0 8px}
+.card p{font-size:15px;line-height:1.65;color:rgba(251,243,228,.86)}
+.card .role{display:inline-block;margin-top:10px;font-size:12px;font-weight:800;padding:4px 10px;border-radius:99px;background:color-mix(in srgb,var(--c) 18%,transparent);color:var(--c)}
+
+/* demo controls */
+canvas.dc{display:block;width:100%;height:auto;border-radius:16px;background:rgba(3,6,16,.62)}
+.ctl{display:grid;gap:7px;margin:14px 0 4px}
+.ctl label{display:flex;justify-content:space-between;font-size:12.5px;font-weight:800;color:var(--muted)}
+.ctl label b{color:var(--cream)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:4px;background:rgba(255,255,255,.18);outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--c);box-shadow:0 0 0 4px rgba(255,255,255,.1),0 0 14px var(--c)}
+input[type=range]::-moz-range-thumb{width:18px;height:18px;border:0;border-radius:50%;background:var(--c);box-shadow:0 0 0 4px rgba(255,255,255,.1),0 0 14px var(--c)}
+select,.inp{width:100%;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);outline:none;font-size:14px;font-weight:600}
+select option{background:#121a33}
+.inp:focus,select:focus{border-color:var(--c)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.btn{padding:9px 16px;border-radius:99px;background:var(--c);color:#0a0f1f;font-weight:800;font-size:13.5px;transition:transform .2s,opacity .2s}
+.btn:hover{transform:translateY(-1px)}
+.btn:disabled{opacity:.4;transform:none;cursor:default}
+.btn.ghost{background:transparent;color:var(--cream);border:1px solid rgba(255,255,255,.22)}
+.seg{display:inline-flex;background:rgba(255,255,255,.08);border-radius:99px;padding:3px}
+.seg button{padding:6px 12px;border-radius:99px;font-size:12.5px;font-weight:800;transition:background .25s,color .25s}
+.seg .on{background:var(--c);color:#0a0f1f}
+.read{font-size:13px;font-weight:700;color:var(--muted);min-height:1.4em}
+.read b{color:var(--cream)}
+.meter{position:relative;height:26px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:12px}
+.meter .mfill{position:absolute;inset:0;width:0;background:linear-gradient(90deg,#7be0a8,#f6d58e 55%,#ff8a7a);border-radius:99px}
+.meter .mlabel{position:absolute;inset:0;display:flex;align-items:center;padding-left:12px;font-size:12px;font-weight:800;color:#0a0f1f;mix-blend-mode:normal}
+.lamp-row{display:grid;grid-template-columns:120px 1fr;gap:18px;align-items:center}
+.lamp{width:120px;height:120px;border-radius:50%;transition:background .5s,box-shadow .5s;position:relative}
+.lamp::after{content:'';position:absolute;inset:18%;border-radius:50%;background:rgba(255,255,255,.35);filter:blur(10px)}
+.chan{display:grid;grid-template-columns:18px 1fr 36px;gap:8px;align-items:center;font-size:12px;font-weight:800;margin:6px 0}
+.chan .bar{height:8px;border-radius:8px;background:rgba(255,255,255,.08);overflow:hidden}
+.chan .bar i{display:block;height:100%;width:0;border-radius:8px;transition:width .45s cubic-bezier(.2,.8,.2,1)}
+.bits{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:var(--muted);line-height:1.7;margin-top:10px}
+.bits b{color:var(--c)}
+.state{display:inline-block;padding:3px 10px;border-radius:99px;border:1px solid var(--c);color:var(--c);font-weight:800;font-size:11.5px;letter-spacing:.12em}
+.steps{display:grid;gap:10px;margin-top:14px}
+.step{display:flex;gap:10px;align-items:center;font-size:13.5px;font-weight:700;color:rgba(251,243,228,.4);transition:color .4s}
+.step i{width:22px;height:22px;flex:none;border-radius:50%;border:1.5px solid rgba(255,255,255,.25);display:grid;place-items:center;font-style:normal;font-size:11px;transition:background .4s,border-color .4s,color .4s}
+.step.done{color:var(--cream)}
+.step.done i{background:var(--c);border-color:var(--c);color:#0a0f1f}
+.dash{margin-top:16px;display:grid;gap:7px}
+.dash h5{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:800}
+.dbar{display:grid;grid-template-columns:1fr 2fr 30px;gap:8px;align-items:center;font-size:12px;font-weight:700}
+.dbar .t{height:8px;border-radius:8px;background:rgba(255,255,255,.07);overflow:hidden}
+.dbar .t i{display:block;height:100%;width:0;background:var(--c);border-radius:8px;transition:width .7s cubic-bezier(.2,.8,.2,1)}
+.grid2{display:grid;grid-template-columns:1fr 110px;gap:10px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{font-size:12px;font-weight:700;padding:4px 10px;border-radius:99px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);transition:background .3s}
+.chip.x{cursor:pointer}
+.chip.x:hover{background:rgba(255,255,255,.16)}
+.chip.m{background:color-mix(in srgb,var(--c) 22%,transparent);border-color:var(--c);color:var(--cream)}
+.score{display:flex;align-items:baseline;gap:12px;margin-top:14px}
+.score .pc{font-family:var(--serif);font-weight:400;font-size:46px;color:var(--c);line-height:1;font-variation-settings:"SOFT" 100}
+.score span{font-weight:800;font-size:14px}
+.xrows{position:relative;margin-top:12px}
+.xrow{position:absolute;left:0;right:0;height:26px;display:grid;grid-template-columns:118px 1fr;gap:10px;align-items:center;font-size:12px;font-weight:700;transition:top .6s cubic-bezier(.2,.8,.2,1),opacity .4s;color:rgba(251,243,228,.55)}
+.xrow.keep{color:var(--cream)}
+.xrow .bars{display:grid;gap:2px}
+.xrow .bars i{display:block;height:6px;border-radius:6px;width:0;transition:width .6s cubic-bezier(.2,.8,.2,1),opacity .4s,background .4s}
+.xrow .s{background:#a9b6ff}.xrow .l{background:#f6b8e6}
+.xrow:not(.top) .bars i{opacity:.35}
+.legend{display:flex;gap:14px;font-size:11.5px;font-weight:800;color:var(--muted);margin-top:8px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.contact{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:18px}
+.mail{font-weight:800;font-size:15px;padding:12px 18px;border-radius:99px;background:rgba(251,243,228,.95);color:#121628;user-select:all}
+
+/* ---------- epilogue + credits ---------- */
+.boats{will-change:transform;bottom:auto;height:min(100%,41.8vw)}
+.boats img{object-position:50% 50%}
+.boats::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,11,22,.35),transparent 20%,transparent 62%,var(--night) 99%)}
+.ep-shade{background:linear-gradient(0deg,var(--night) 0%,rgba(7,11,22,.75) 30%,transparent 55%)}
+.ep-copy{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:flex-start;padding:0 7vw 8vh}
+.ep-copy .box{width:min(640px,88vw)}
+.ep-line{opacity:0;will-change:transform,opacity,filter}
+.ep-copy h2{font-family:var(--serif);font-weight:400;font-size:clamp(38px,4.8vw,70px);line-height:1.02;margin:.25em 0 .4em;font-variation-settings:"SOFT" 100}
+.ep-copy h2 em{color:var(--gold)}
+.ep-copy p{font-size:17px;line-height:1.7}
+@media(max-width:760px){.ep-copy{justify-content:center;padding-bottom:12vh}}
+#credits{position:relative;padding:120px 6vw 140px;background:radial-gradient(ellipse 70% 50% at 50% 0%,#141b38,var(--night) 70%)}
+.cred{max-width:860px;margin:0 auto}
+.cred h2{font-family:var(--serif);font-weight:400;font-size:clamp(38px,5vw,68px);line-height:1.04;font-variation-settings:"SOFT" 100;margin:.25em 0 .5em}
+.cred h2 em{color:#f8c9f0}
+.cred>p{font-size:17px;line-height:1.7;color:rgba(251,243,228,.86);max-width:680px}
+.cred ul{list-style:none;margin:34px 0;display:grid;gap:12px}
+.cred li{display:grid;grid-template-columns:190px 1fr;gap:16px;padding:16px 0;border-top:1px solid rgba(255,255,255,.1);font-size:15px;line-height:1.6}
+.cred li b{font-weight:800;color:var(--gold);font-size:12px;letter-spacing:.14em;text-transform:uppercase;padding-top:3px}
+@media(max-width:640px){.cred li{grid-template-columns:1fr;gap:4px}}
+.cred .small{font-size:13.5px;color:var(--muted);line-height:1.65}
+.cred .end{margin-top:46px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.cred .end p{font-family:var(--serif);font-style:italic;font-size:22px;font-variation-settings:"SOFT" 100}
+
+/* ---------- bunny buddy ---------- */
+#buddy{position:fixed;left:0;bottom:16px;z-index:70;width:62px;height:60px;cursor:pointer;user-select:none;-webkit-user-select:none;touch-action:manipulation;-webkit-tap-highlight-color:transparent;opacity:0}
+#buddy .bun{width:100%;height:100%;transform-origin:50% 100%}
+#buddy .idle{width:100%;height:100%;animation:idle 2.8s ease-in-out infinite;transform-origin:50% 100%}
+#buddy img{width:100%;height:100%;object-fit:contain;pointer-events:none;filter:drop-shadow(0 6px 8px rgba(0,0,0,.45)) drop-shadow(0 0 14px rgba(255,205,225,.35))}
+@keyframes idle{0%,100%{transform:translateY(0) scale(1,1)}50%{transform:translateY(-3px) scale(1.035,.965)}}
+#buddy .shadow{position:absolute;left:14%;right:14%;bottom:-5px;height:7px;border-radius:50%;background:rgba(0,0,0,.35);filter:blur(3px)}
+.bubble{position:absolute;bottom:calc(100% + 10px);right:-4px;width:max-content;max-width:min(270px,72vw);background:rgba(251,243,228,.97);color:#1b1d33;font-size:13.5px;font-weight:700;line-height:1.45;padding:10px 14px;border-radius:16px 16px 4px 16px;box-shadow:0 12px 34px rgba(0,0,0,.38);opacity:0;transform:translateY(8px) scale(.94);transform-origin:100% 100%;transition:opacity .3s,transform .4s cubic-bezier(.2,.9,.3,1.35);pointer-events:none}
+#buddy.left .bubble{right:auto;left:-4px;border-radius:16px 16px 16px 4px;transform-origin:0 100%}
+.bubble.show{opacity:1;transform:none}
+.bubble small{display:block;font-size:11px;color:#6b6a80;margin-top:4px;font-weight:700}
+.spark{position:fixed;z-index:69;pointer-events:none;color:#ffd98a;font-size:12px;text-shadow:0 0 8px #ffb84d;left:0;top:0}
+
+@media (prefers-reduced-motion: reduce){
+  .pin .in::before,#buddy .idle,.panel-bg img,.cue i{animation:none}
+}
+@media(max-width:560px){.brand{font-size:18px}.topnav button{padding:6px 10px;font-size:11.5px}.topbar{padding:12px 14px}}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <div class="brand">Parnika <span>·</span> Kumar</div>
+  <nav class="topnav" aria-label="Sections">
+    <button data-go="#prologue">Story</button>
+    <button data-go="#map">Map</button>
+    <button data-go="#credits">Credits</button>
+  </nav>
+</header>
+
+<main>
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"><img id="heroImg" src="img/hero.jpg" alt="A small caped traveller stands on a flowered hill, looking out at a valley of pink clouds and light."></div>
+  <div class="hero-shade"></div>
+  <canvas id="motes"></canvas>
+  <div class="hero-center">
+    <div class="hero-copy">
+      <p class="eyebrow">a storybook portfolio</p>
+      <h1 class="title"><span class="word" data-split>Parnika</span> <span class="word it" data-split>Kumar</span></h1>
+      <p class="sub">Computer Science (AI &amp; ML) at VIT, Vellore. Two research papers, one funded startup and an internship across an ocean — told the way it actually happened.</p>
+    </div>
+  </div>
+  <div class="cue">scroll to begin<i></i></div>
+</section>
+
+<!-- PROLOGUE -->
+<section id="prologue" class="scene">
+  <div class="sticky">
+    <div class="layer cave-img"><img src="img/cave.jpg" alt="White birds fly up through a dark blue cave toward a bright opening of light."></div>
+    <div class="layer cave-shade"></div>
+    <div class="beat-wrap">
+      <div class="beat"><p class="k">Prologue</p><h2>Every map starts <em>somewhere.</em></h2><p>Mine starts in Jamshedpur. Scroll slowly — the birds know the way.</p></div>
+      <div class="beat"><p class="k">Jamshedpur · 2022 – 2024</p><h2>97.4, <em>then 90.</em></h2><p>ICSE Class X, then ISC Class XII, at DBMS English School. The first two numbers on this journey.</p></div>
+      <div class="beat"><p class="k">Vellore · 2024 – now</p><h2>Into <em>AI &amp; ML.</em></h2><p>B.Tech CSE (Artificial Intelligence &amp; Machine Learning) at VIT — CGPA 8.61. Algorithms, computer architecture, theory of computation, computational geometry, randomized algorithms: all of them show up again on this map.</p></div>
+      <div class="beat"><p class="k">Two years in</p><h2>The count <em>so far.</em></h2>
+        <div class="stats">
+          <div class="stat"><b data-count="2">0</b><span>research papers — IEEE (published) &amp; Springer (accepted)</span></div>
+          <div class="stat"><b data-count="40000" data-prefix="₹">₹0</b><span>raised from a university panel for a startup</span></div>
+          <div class="stat"><b data-count="1">0</b><span>internship on another continent — Mozambique</span></div>
+          <div class="stat"><b data-count="4">0</b><span>team builds where my role changed every time</span></div>
+        </div></div>
+      <div class="beat"><p class="k">Next</p><h2>Follow <em>the path.</em></h2><p>Seven places on one map. Each pin is a chapter: the real problem, what I did, and something small you can try yourself.</p></div>
+    </div>
+    <div class="layer dark" id="caveDark"></div>
+  </div>
+</section>
+
+<!-- TUNNEL -->
+<section id="tunnel" class="scene">
+  <div class="sticky">
+    <div class="layer tunnel-wrap"><img src="img/tunnel.jpg" alt="A grassy path curls into a spiral tunnel of green hills opening onto clouds."></div>
+    <div class="tunnel-text"><div><h2>Go through.</h2><p>the map is on the other side</p></div></div>
+    <div class="layer dark" id="tunnelIn" style="opacity:1"></div>
+    <div class="layer dark" id="tunnelOut"></div>
+  </div>
+</section>
+
+<!-- MAP -->
+<section id="map" aria-label="Journey map">
+  <div class="map-cam" id="cam">
+    <div class="map-art"><img src="img/map.jpg" alt="An illustrated world map of floating islands and regions, relabelled with the chapters of Parnika's journey."></div>
+    <div class="logo-cover"><small>the world of</small><strong>Parnika</strong><em>a map of how I got here</em></div>
+    <svg class="route" viewBox="0 0 1080 1161" preserveAspectRatio="none" aria-hidden="true">
+      <defs><mask id="routeMask" maskUnits="userSpaceOnUse" x="0" y="0" width="1080" height="1161"><path id="routeReveal" fill="none" stroke="#fff" stroke-width="14" stroke-linecap="round"/></mask></defs>
+      <path id="routeGlow" fill="none" stroke="rgba(251,243,228,.18)" stroke-width="6" stroke-linecap="round" mask="url(#routeMask)"/>
+      <path id="routeDots" fill="none" stroke="rgba(251,243,228,.85)" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="0.1 11" mask="url(#routeMask)"/>
+    </svg>
+    <div id="pins"></div>
+    <div class="map-veil" id="mapVeil"></div>
+  </div>
+  <p class="map-hint"><b>Tap a glowing place</b> — each one opens a chapter. The dotted line is the route I'd walk you along.</p>
+</section>
+
+<!-- EPILOGUE -->
+<section id="epilogue" class="scene">
+  <div class="sticky">
+    <div class="layer boats"><img src="img/boats.jpg" alt="Two figures crouch by a forest stream, setting small glowing paper boats onto the water."></div>
+    <div class="layer ep-shade"></div>
+    <div class="ep-copy"><div class="box">
+      <p class="k ep-line">Epilogue</p>
+      <h2 class="ep-line">Every chapter started as a <em>small paper boat.</em></h2>
+      <p class="ep-line">An idea pushed out onto the water. Some came back as papers, one as a funded startup, one as an app in another language. I'm looking for the next stream: an <b>AI/ML internship for Summer 2027</b>.</p>
+      <div class="contact ep-line"><span class="mail">parnika.kumar2024@vitstudent.ac.in</span><button class="pill" data-copy="parnika.kumar2024@vitstudent.ac.in">Copy email</button></div>
+    </div></div>
+  </div>
+</section>
+
+<!-- CREDITS -->
+<section id="credits">
+  <div class="cred">
+    <p class="k">The last page</p>
+    <h2>The art in this storybook <em>isn't mine.</em></h2>
+    <p>I'm not a UI/UX designer, and I didn't want to pretend to be one. Every landscape here comes from <b>Sky: Children of Light</b> — my favourite game, and the reason this site exists in this shape. The code, the words and the journey are mine; the light belongs to the people below.</p>
+    <ul>
+      <li><b>World &amp; art</b><span>Sky: Children of Light © thatgamecompany — the landscapes, the jellyfish, the spiral path, the paper-boat illustration and my bunny travel buddy all come from their game and its world.</span></li>
+      <li><b>World map</b><span>Infographic by the <i>Sky: COTL Infographic Database</i> Discord server. I relabelled the regions with my own chapters.</span></li>
+      <li><b>Cave of birds</b><span>Screenshot by Douyin creator 49256098355.</span></li>
+      <li><b>Inspiration</b><span>The opening feeling was inspired by Lusion's <i>My Little Storybook</i>.</span></li>
+      <li><b>Built with</b><span>HTML, CSS and JavaScript · GSAP + ScrollTrigger · Lenis smooth scroll · Fraunces &amp; Nunito typefaces.</span></li>
+    </ul>
+    <p class="small">This is a personal, non-commercial fan tribute. All game art and trademarks belong to their owners. If you made any of these images and want them credited differently or removed, please write to me and I'll fix it the same day.</p>
+    <div class="end"><p>Go play Sky. ✦</p><button class="pill" data-go="#hero">Back to the beginning ↑</button></div>
+  </div>
+</section>
+</main>
+
+<!-- CHAPTER PANEL -->
+<div class="panel" id="panel" role="dialog" aria-modal="true" aria-label="Chapter">
+  <div class="panel-bg"><img src="img/jelly.jpg" alt=""></div>
+  <div class="panel-scroll" id="panelScroll" data-lenis-prevent><article class="chapter" id="chapter"></article></div>
+</div>
+
+<!-- BUNNY -->
+<div id="buddy" role="button" tabindex="0" aria-label="Bunny travel buddy. Click to talk, double-click to make it hop.">
+  <div class="bubble" id="bubble"><p></p></div>
+  <div class="shadow"></div>
+  <div class="bun"><div class="idle"><img src="img/bunny.png" alt=""></div></div>
+</div>
+
+<script src="js/gsap.min.js"></script>
+<script src="js/ScrollTrigger.min.js"></script>
+<script src="js/lenis.min.js"></script>
+<script>
+(()=>{
+'use strict';
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+gsap.registerPlugin(ScrollTrigger);
+
+/* ---------------- smooth scroll ---------------- */
+let lenis=null;
+if(!reduce && window.Lenis){
+  lenis=new Lenis({lerp:.085,smoothWheel:true,wheelMultiplier:.95});
+  lenis.on('scroll',ScrollTrigger.update);
+  gsap.ticker.add(t=>lenis.raf(t*1000));
+  gsap.ticker.lagSmoothing(0);
+}
+const go=(sel)=>{const el=$(sel); if(!el) return; lenis?lenis.scrollTo(el,{duration:2,easing:t=>1-Math.pow(1-t,4)}):el.scrollIntoView({behavior:reduce?'auto':'smooth'});};
+$$('[data-go]').forEach(b=>b.addEventListener('click',()=>{ if(panelOpen) closeRegion(true); go(b.dataset.go); }));
+$$('[data-copy]').forEach(b=>b.addEventListener('click',async()=>{ try{await navigator.clipboard.writeText(b.dataset.copy); b.textContent='Copied ✓';}catch(e){b.textContent='Select the address to copy';} setTimeout(()=>b.textContent='Copy email',2200); }));
+
+gsap.to('#progress',{scaleX:1,ease:'none',scrollTrigger:{trigger:document.body,start:'top top',end:'bottom bottom',scrub:.3}});
+
+/* ---------------- hero ---------------- */
+$$('[data-split]').forEach(el=>{el.innerHTML=[...el.textContent].map(c=>`<span class="ch">${c}</span>`).join('');});
+const intro=gsap.timeline({delay:.15});
+intro.from('.hero-bg',{scale:1.16,duration:2.6,ease:'power3.out'},0)
+  .from('.hero-bg img',{opacity:0,duration:1.2,ease:'power1.out'},0)
+  .from('.title .ch',{yPercent:115,rotate:7,opacity:0,filter:'blur(8px)',duration:1.25,stagger:.05,ease:'expo.out'},.4)
+  .from('.eyebrow',{y:18,opacity:0,duration:1,ease:'power3.out'},.45)
+  .from('.sub',{y:22,opacity:0,filter:'blur(6px)',duration:1.2,ease:'power3.out'},1.0)
+  .from('.cue,.topbar',{opacity:0,duration:1},1.4)
+  .add(()=>buddy.enter(),1.7);
+
+gsap.timeline({scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom top',scrub:true}})
+  .to('.hero-bg',{scale:1.12,yPercent:7,ease:'none'},0)
+  .to('.hero-copy',{y:-140,opacity:0,filter:'blur(10px)',ease:'none'},0)
+  .to('.cue',{opacity:0,ease:'none',duration:.3},0);
+
+if(!reduce && matchMedia('(pointer:fine)').matches){
+  const qx=gsap.quickTo('#heroImg','x',{duration:1.4,ease:'power3'}), qy=gsap.quickTo('#heroImg','y',{duration:1.4,ease:'power3'});
+  $('#hero').addEventListener('pointermove',e=>{qx((e.clientX/innerWidth-.5)*-18); qy((e.clientY/innerHeight-.5)*-12);});
+}
+
+// floating light motes
+(()=>{
+  const cv=$('#motes'), ctx=cv.getContext('2d'); let W,H,dpr,ps=[],on=true,raf;
+  const size=()=>{dpr=Math.min(2,devicePixelRatio||1);W=cv.offsetWidth;H=cv.offsetHeight;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);};
+  const mk=(y)=>({x:Math.random()*W,y:y??Math.random()*H,r:.6+Math.random()*1.9,v:6+Math.random()*16,ph:Math.random()*6.28,a:.25+Math.random()*.6});
+  size(); ps=Array.from({length:Math.round(clamp(W/22,30,70))},()=>mk());
+  addEventListener('resize',size);
+  let last=performance.now();
+  const tick=(now)=>{const dt=Math.min(.05,(now-last)/1000);last=now;ctx.clearRect(0,0,W,H);
+    for(const p of ps){p.y-=p.v*dt;p.ph+=dt*.8;p.x+=Math.sin(p.ph)*.25; if(p.y<-10){Object.assign(p,mk(H+10));}
+      const tw=.55+.45*Math.sin(p.ph*2.3); ctx.beginPath(); ctx.fillStyle=`rgba(255,236,205,${p.a*tw})`; ctx.shadowColor='rgba(255,220,170,.9)'; ctx.shadowBlur=8; ctx.arc(p.x,p.y,p.r,0,6.283); ctx.fill();}
+    if(on) raf=requestAnimationFrame(tick);};
+  if(!reduce){ new IntersectionObserver(([e])=>{on=e.isIntersecting; if(on){last=performance.now(); cancelAnimationFrame(raf); raf=requestAnimationFrame(tick);}}).observe($('#hero')); }
+})();
+
+/* ---------------- prologue ---------------- */
+let counted=false;
+function countUp(){ if(counted) return; counted=true;
+  $$('[data-count]').forEach(el=>{const o={v:0},tg=+el.dataset.count,pre=el.dataset.prefix||'';
+    gsap.to(o,{v:tg,duration:1.8,ease:'power2.out',onUpdate:()=>el.textContent=pre+Math.round(o.v).toLocaleString('en-IN')});});
+}
+(()=>{
+  const beats=$$('.beat'), D=10, seg=D/beats.length;
+  const tl=gsap.timeline({scrollTrigger:{trigger:'#prologue',start:'top top',end:'bottom bottom',scrub:1.2}});
+  tl.fromTo('.cave-img',{scale:1.32,yPercent:4},{scale:1,yPercent:0,ease:'none',duration:D},0);
+  beats.forEach((b,i)=>{const d=i%2?1:-1,t0=i*seg+(i===0?.15:0);
+    tl.fromTo(b,{opacity:0,x:d*170,y:70,rotate:d*5,scale:.93,filter:'blur(16px)'},{opacity:1,x:0,y:0,rotate:0,scale:1,filter:'blur(0px)',duration:seg*.36,ease:'power2.out'},t0);
+    if(i===3) tl.call(countUp,null,t0+seg*.2);
+    if(i<beats.length-1) tl.to(b,{opacity:0,x:-d*130,y:-60,rotate:-d*3,filter:'blur(12px)',duration:seg*.28,ease:'power2.in'},t0+seg*.72);
+  });
+  tl.to('.beat:last-child',{opacity:0,y:-40,filter:'blur(10px)',duration:.5},D-.55);
+  tl.to('#caveDark',{opacity:1,duration:.6,ease:'none'},D-.6);
+})();
+
+/* ---------------- tunnel ---------------- */
+(()=>{
+  const wrap=$('.tunnel-wrap');
+  const setOrigin=()=>{ // keep the zoom aimed at the tunnel's opening whatever the screen shape
+    const vw=innerWidth,vh=innerHeight,iw=720,ih=894,s=Math.max(vw/iw,vh/ih);
+    const ox=(vw-iw*s)*.5+432*s, oy=(vh-ih*s)*.57+528*s;
+    gsap.set(wrap,{transformOrigin:`${ox}px ${oy}px`});
+  };
+  setOrigin(); ScrollTrigger.addEventListener('refreshInit',setOrigin);
+  const tl=gsap.timeline({scrollTrigger:{trigger:'#tunnel',start:'top top',end:'bottom bottom',scrub:1}});
+  tl.to('#tunnelIn',{opacity:0,duration:1.2,ease:'power1.out'},0)
+    .fromTo(wrap,{scale:1,rotate:0},{scale:7.5,rotate:16,ease:'power2.in',duration:10},0)
+    .fromTo('.tunnel-text div',{opacity:0,y:30,filter:'blur(10px)'},{opacity:1,y:0,filter:'blur(0px)',duration:1.8,ease:'power2.out'},.8)
+    .to('.tunnel-text div',{opacity:0,scale:1.5,filter:'blur(14px)',duration:2},4.2)
+    .to('#tunnelOut',{opacity:1,duration:2.2,ease:'power1.in'},7.8);
+})();
+
+/* ---------------- regions + chapters ---------------- */
+const ORDER=['dawn','prairie','forest','valley','wasteland','vault','eden'];
+const R={
+ dawn:{name:'Isle of Beginnings',sub:'Jamshedpur → VIT',c:'#c7b8ff',pin:[600,888],lbl:[740,1002],w:19},
+ prairie:{name:'Prairie of Light',sub:'IEEE paper · 2026',c:'#a9ec9f',pin:[292,872],lbl:[198,970],w:20},
+ forest:{name:'Forest Across the Sea',sub:'Mozambique · 2025',c:'#7fdcef',pin:[172,690],lbl:[125,587],w:22},
+ valley:{name:'Valley of Teams',sub:'4 team builds',c:'#ff9e88',pin:[562,548],lbl:[375,472],w:22},
+ wasteland:{name:'The Wasteland Year',sub:'₹40,000 startup',c:'#e4ef93',pin:[792,640],lbl:[918,755],w:22},
+ vault:{name:'Vault of Explanations',sub:'Springer paper · XAI',c:'#aab7ff',pin:[762,422],lbl:[906,365],w:23},
+ eden:{name:'Eden',sub:'Summer 2027',c:'#ffb46e',pin:[526,298],lbl:[410,225],w:13}
+};
+const C={
+ dawn:{kicker:'Pin 1 · Jamshedpur → Vellore · 2022 – now',title:'Isle of Beginnings',
+  not:'Strong academic background.',
+  but:'Two board exams at 97.4% and 90%, then a deliberate specialization: CSE with AI &amp; ML at VIT, CGPA 8.61 — and a weekend spent teaching a tiny robot to see a line.',
+  beats:[
+   '<span class="tag">School</span>DBMS English School, Jamshedpur — <strong>97.4%</strong> in ICSE Class X (2022), <strong>90%</strong> in ISC Class XII (2024).',
+   '<span class="tag">University</span>B.Tech CSE (Artificial Intelligence &amp; Machine Learning) at VIT, Vellore — <strong>CGPA 8.61/10</strong>, graduating 2028.',
+   '<span class="tag">The theory</span>Design &amp; Analysis of Algorithms, Computer Architecture, Theory of Computation, Computational Geometry, Randomized Algorithms. These are the courses the later chapters quietly lean on.',
+   '<span class="tag">Side quest</span>A 3-day hands-on Edge AI &amp; Robotics workshop at VIT on an <strong>NVIDIA Jetson Nano / JetBot</strong>, where I built a vision-based robot that follows a line on its own.',
+   '<span class="tag">Toolkit</span>Python, Java, C/C++, Verilog HDL, R · scikit-learn, Jupyter · Power Apps, Power BI, Power Automate · ModelSim · Figma · Git.'
+  ],
+  stats:[['97.4%','ICSE Class X'],['90%','ISC Class XII'],['8.61','CGPA at VIT'],['2028','graduating']],
+  demo:'robot',demoTitle:'Steer the line-follower',
+  plain:'<b>In plain words:</b> the robot looks at a patch of floor just ahead of it, finds where the line is, and turns toward it. Turn too gently and it misses the curves. Turn too hard and it wobbles. Getting this balance right is called tuning a controller.',
+  fine:'A browser sketch of the idea behind the workshop robot. The real one used a camera on a Jetson Nano.',
+  bunny:'Drag the steering slider all the way down… then all the way up. Find the sweet spot!'},
+ prairie:{kicker:'Pin 2 · IEEE ICSCT 2026 · Conference No. 70031 · Published',title:'Prairie of Light',
+  not:'Smart lighting system.',
+  but:'Hospital light that changes with the hour and with the patient — because a dementia patient, an ICU patient and someone with migraines don’t need the same light at 3 a.m.',
+  beats:[
+   'I co-designed a <strong>closed-loop finite-state machine in Verilog HDL</strong> that decides, every moment, what colour and brightness a patient’s light should be.',
+   'I architected the personalization: a <strong>5-bit hour</strong>, an <strong>8-bit ambient-light reading</strong> and a <strong>4-bit profile selector</strong> drive <strong>16 patient-specific profiles</strong> — child, adult, dementia, ICU, PTSD, migraine, SAD and more — each with its own colour targets through the day.',
+   'I derived the <strong>inverse-ambient PWM scaling</strong>: the brighter the room already is, the more each 8-bit RGB channel dims itself. Less glare, less overexposure, less wasted energy.',
+   'We compared it against <strong>8 existing circadian-lighting approaches</strong>. The gaps we found — real-time closed-loop control and per-patient adaptation — are exactly what this design addresses.',
+   'Verified in ModelSim: <strong>single-cycle state transitions at 50 MHz</strong> and a glitch-free <strong>~195 kHz PWM</strong>, far above the flicker the eye can notice. Ready for an FPGA.'
+  ],
+  stats:[['16','patient profiles'],['8','approaches compared'],['50 MHz','single-cycle FSM'],['~195 kHz','flicker-free PWM']],
+  demo:'light',demoTitle:'Be the lighting FSM',
+  plain:'<b>In plain words:</b> pick a patient, an hour and how bright the room already is. The controller looks up that patient’s colour for that time of day, then dims it as the room gets brighter. The wavy lines are PWM — the light flicks on and off thousands of times a second, and the share of “on” time sets how bright it looks.',
+  fine:'Simplified for the browser. Colour values are illustrative, not the paper’s tables.',
+  bunny:'Set the hour to 3 a.m. and pick “Dementia”. Then make the room brighter and watch it dim.'},
+ forest:{kicker:'Pin 3 · Vulcan International (Jindal Group) · Moatize, Tete, Mozambique · June 2025',title:'Forest Across the Sea',
+  not:'Built an app during an internship.',
+  but:'The Coal Production Plants were ordering materials by hand, and many of the people placing those orders work in Portuguese. I built the ordering app they could actually use.',
+  beats:[
+   '<span class="tag">The ask</span>Replace a <strong>fully manual materials-ordering process</strong> at Vulcan’s Coal Production Plants (CPPs).',
+   '<span class="tag">The app</span>I designed and delivered it in <strong>Microsoft Power Apps</strong> — low-code, built inside the tools the company already runs on.',
+   '<span class="tag">No more chasing</span>With <strong>Power Automate</strong>, placing an order automatically sends the permission-request email to senior management.',
+   '<span class="tag">Seeing it live</span>A <strong>Power BI dashboard</strong> sits inside the app, so plant and IT staff can watch orders and consumption in real time.',
+   '<span class="tag">Two languages</span>Every screen works in <strong>English and Portuguese</strong>, so staff at the Moatize site could use it in their own language.'
+  ],
+  stats:[['2','languages, every screen'],['3','Power Platform tools'],['1','manual process replaced'],['1','continent away from home']],
+  demo:'order',demoTitle:'Place an order',
+  plain:'<b>In plain words:</b> instead of paperwork and follow-up calls, someone at the plant picks a material and a quantity. The app emails the manager for approval on its own, and the dashboard updates for everyone. Flip the language and nothing breaks.',
+  fine:'A small browser mock of the flow. The real app was built in Microsoft Power Apps for Vulcan.',
+  bunny:'Switch it to Português — the whole app follows along.'},
+ valley:{kicker:'Pin 4 · Semester V · VIT · 2026',title:'Valley of Teams',
+  not:'Worked in teams on course projects.',
+  but:'Four builds, and my role was different in each one: the person with the idea, the one holding the integration together, or the partner keeping it inside the free tier.',
+  cards:[
+   ['One Business, Many Names','DBMS case study · Team Keyless · Oracle SQL / PL-SQL','One real shop shows up in records under five spellings, and every count you try to make goes wrong. The idea for this entity-resolution database was mine; my teammates Modassir Ahmad and Shaurya Goyal wrote the code. We’re taking it past the course toward something real users can use.','My role: the idea'],
+   ['Generic Data-Flow Analysis Framework','Compiler Design (BCSE307) · Project A34 · Team 9','A framework that runs classic compiler analyses over any program’s control-flow graph. I stitched the parser, CFG builder, solver and analyses into one system, and ran testing, bug tracking and the final repository check.','My role: project lead & system integration'],
+   ['SODA-ATC','Computer Networks · Semester V','Machine-learning DDoS detection for software-defined networks, trained on CIC-DDoS2019 and tested on a Mininet testbed, later merged with PAML-ATC’s time-based features.','My role: team member'],
+   ['LinkLogic','AWS case study · with Modassir Ahmad','Real-time entity resolution on AWS — the “many names” problem again, this time as a live service, built entirely inside the AWS Free Tier.','My role: project partner']
+  ],
+  stats:[['4','team builds'],['3','different roles'],['2','entity-resolution systems']],
+  demo:'match',demoTitle:'Are these the same business?',
+  plain:'<b>In plain words:</b> people type the same business in different ways — “Shree” or “Sri”, “Trading Co.” or “Traders”. The matcher first cleans both names into a standard form, then measures how much they overlap. High overlap: probably the same business. In-between: a human should check.',
+  fine:'The idea in miniature. The real system runs inside an Oracle database with SQL and PL/SQL.',
+  bunny:'Type two spellings of the same shop and see if the matcher catches it.'},
+ wasteland:{kicker:'Pin 5 · Student Startup Venture (SSV), VIT · final review December 2026',title:'The Wasteland Year',
+  not:'Predict seizures with AI.',
+  but:'A non-invasive wearable that reads EEG as a sequence and raises an early warning before a seizure begins — built as a preventive alert, deliberately not a diagnosis.',
+  beats:[
+   'I co-founded a Student Startup Venture at VIT and pitched the business plan to a university panel. We came away with <strong>₹40,000</strong> to build a prototype.',
+   'I led the <strong>ML model</strong> and <strong>product design</strong> workstreams. The model is an <strong>LSTM</strong>, because a seizure isn’t one snapshot — it builds up over time, and an LSTM is built to read time.',
+   'We compared approaches, <strong>XGBoost against LSTM</strong>, and set our bar using published work: Tsiouris et al. (2018) report <strong>&gt;99% sensitivity</strong> on public EEG data. That number is theirs, not ours — it’s the target.',
+   'Who it’s for: the roughly <strong>50 million people</strong> living with epilepsy worldwide, for whom a few minutes of warning can mean sitting down instead of falling.',
+   'Then the hard part. In 2026 the team couldn’t hold together. I didn’t drop it: I’m finishing the <strong>software side on my own</strong>, aiming for the end of 2026.'
+  ],
+  stats:[['₹40,000','funding secured'],['50M','people with epilepsy'],['Dec 2026','final review'],['1','person still building']],
+  demo:'eeg',demoTitle:'Watch for the warning',
+  plain:'<b>In plain words:</b> brain signals get busier and more rhythmic in the minutes before some seizures. The model reads a short sliding window of signal (the highlighted box) again and again, and raises its hand early when the pattern starts to build.',
+  fine:'Synthetic signal. A simple rolling-energy rule stands in for the LSTM here — it shows the idea (watch a window over time, warn early), not our model’s accuracy.',
+  bunny:'Press “Add a warning pattern” and watch the meter climb before the big spike.'},
+ vault:{kicker:'Pin 6 · ICAISDA 2026 (Springer) · accepted · and BCSE418L Explainable AI',title:'Vault of Explanations',
+  not:'Explainable AI for EEG.',
+  but:'If a model says “seizure”, a clinician should be able to see why. This work chooses which EEG features to keep by asking more than one explanation method — and checking whether they agree.',
+  beats:[
+   'Co-authored, with three others, <strong>“An Explainable EEG Seizure Detection Framework Using Sequential Fuzzy Multi-Criteria Feature Selection”</strong> — accepted at ICAISDA 2026 (Springer).',
+   'For my Explainable AI course (BCSE418L, Dr. Manikandan G), I extended that line of work into <strong>SFMCFS</strong>: a <strong>CNN-LSTM hybrid with attention</strong>, explained with <strong>SHAP</strong> and <strong>LIME</strong>.',
+   'The twist: instead of trusting one explainer, I <strong>measure how much SHAP and LIME agree</strong>, and let that agreement guide which features survive. When two different methods point at the same signal, it’s easier to believe.'
+  ],
+  stats:[['2','explainers cross-checked'],['4','authors'],['CNN·LSTM','+ attention'],['Springer','ICAISDA 2026']],
+  demo:'xai',demoTitle:'Do the explainers agree?',
+  plain:'<b>In plain words:</b> each bar says how much a feature mattered to the model’s decision, according to one explainer. Pick how many top features to keep. The ones <b>both</b> explainers rank highly are the ones we trust and keep.',
+  fine:'Feature names and scores are illustrative — they show the method, not the paper’s results.',
+  bunny:'Slide “keep top” up and down — watch which features both explainers agree on.'},
+ eden:{kicker:'Pin 7 · the summit · Summer 2027',title:'Eden',
+  not:'Seeking opportunities.',
+  but:'An AI/ML internship for Summer 2027, where the problem is specific, the users are real, and I get to keep learning from people better than me.',
+  beats:[
+   '<span class="tag">Finishing</span>The seizure-prediction software, by the end of 2026.',
+   '<span class="tag">Learning</span>Deep Learning Specialization (DeepLearning.AI) · IBM Generative AI Professional Certificate (in progress).',
+   '<span class="tag">Practising</span>Data structures &amp; algorithms, CS fundamentals, and a lot of code — every week.'
+  ],
+  stats:[['2027','summer internship'],['AI/ML','where I want to build']],
+  demo:'contact',demoTitle:'Say hello',
+  bunny:'This is the top of the map… for now. Send a paper boat?'}
+};
+
+/* build pins + labels */
+const pinsEl=$('#pins');
+ORDER.forEach((id,i)=>{const r=R[id];
+  const pin=document.createElement('button'); pin.className='pin'; pin.dataset.id=id; pin.style.cssText=`left:${r.pin[0]/10.8}%;top:${r.pin[1]/11.61}%;--c:${r.c};--d:${i*.35}s`;
+  pin.setAttribute('aria-label',`Chapter ${i+1}: ${r.name} — ${r.sub}`); pin.innerHTML=`<span class="in"><i>${i+1}</i></span>`;
+  const lbl=document.createElement('button'); lbl.className='lbl'; lbl.dataset.id=id; lbl.tabIndex=-1; lbl.setAttribute('aria-hidden','true');
+  lbl.style.cssText=`left:${r.lbl[0]/10.8}%;top:${r.lbl[1]/11.61}%;--c:${r.c};--w:${r.w}cqw`; lbl.innerHTML=`<span class="in">${r.name}<small>${r.sub}</small></span>`;
+  pinsEl.append(lbl,pin);
+  [pin,lbl].forEach(el=>{el.addEventListener('click',()=>openRegion(id));
+    el.addEventListener('pointerenter',()=>{$$(`[data-id="${id}"]`,pinsEl).forEach(x=>x.classList.add('hot'));});
+    el.addEventListener('pointerleave',()=>{$$(`[data-id="${id}"]`,pinsEl).forEach(x=>x.classList.remove('hot'));});});
+});
+gsap.set('.pin,.lbl',{xPercent:-50,yPercent:-50});
+
+/* the route: a smooth curve through the pins, in chapter order */
+(()=>{const P=ORDER.map(id=>R[id].pin); let d=`M${P[0][0]},${P[0][1]}`;
+  for(let i=0;i<P.length-1;i++){const p0=P[i-1]||P[i],p1=P[i],p2=P[i+1],p3=P[i+2]||p2;
+    d+=` C${p1[0]+(p2[0]-p0[0])/6},${p1[1]+(p2[1]-p0[1])/6} ${p2[0]-(p3[0]-p1[0])/6},${p2[1]-(p3[1]-p1[1])/6} ${p2[0]},${p2[1]}`;}
+  ['routeReveal','routeGlow','routeDots'].forEach(i=>$('#'+i).setAttribute('d',d));
+  const L=$('#routeReveal').getTotalLength(); gsap.set('#routeReveal',{strokeDasharray:L,strokeDashoffset:L});
+})();
+
+gsap.timeline({scrollTrigger:{trigger:'#map',start:'top 65%',once:true}})
+  .from('.map-art',{opacity:0,scale:1.06,filter:'blur(14px)',duration:1.7,ease:'power3.out',clearProps:'filter'})
+  .from('.logo-cover',{opacity:0,y:24,filter:'blur(8px)',duration:1.1,ease:'power3.out',clearProps:'filter'},.5)
+  .to('#routeReveal',{strokeDashoffset:0,duration:2.6,ease:'power2.inOut'},.8)
+  .from('.lbl',{opacity:0,y:20,filter:'blur(8px)',duration:.9,stagger:.2,ease:'power3.out',clearProps:'filter'},1.0)
+  .from('.pin',{scale:0,opacity:0,duration:.7,stagger:.2,ease:'back.out(2.2)'},1.1)
+  .from('.map-hint',{opacity:0,y:10,duration:.8},2.4);
+
+/* ---------------- open / close chapters (zoom, then reveal) ---------------- */
+let panelOpen=false, current=null, cleanup=null, busy=false;
+const panel=$('#panel'), chapter=$('#chapter'), cam=$('#cam');
+
+function renderChapter(id){
+  if(cleanup){cleanup();cleanup=null;}
+  const r=R[id],c=C[id],i=ORDER.indexOf(id),prev=ORDER[i-1],next=ORDER[i+1];
+  chapter.style.setProperty('--c',r.c);
+  const left=c.cards
+    ? `<div class="cards">${c.cards.map(k=>`<div class="card rv"><h4>${k[0]}</h4><p class="meta">${k[1]}</p><p>${k[2]}</p><span class="role">${k[3]}</span></div>`).join('')}</div>`
+    : `<ul class="beats">${c.beats.map(b=>`<li class="rv">${b}</li>`).join('')}</ul>`;
+  chapter.innerHTML=`
+   <button class="pill rv" data-act="back">← Back to the map</button>
+   <p class="kicker rv">${c.kicker}</p>
+   <h2 class="rv">${c.title}</h2>
+   <div class="notbut"><p class="not rv"><span>not</span><s>${c.not}</s></p><p class="but rv"><span>but</span>${c.but}</p></div>
+   <div class="cols"><div>${left}<div class="pstats">${c.stats.map(s=>`<div class="rv"><b>${s[0]}</b><span>${s[1]}</span></div>`).join('')}</div></div>
+     <aside class="demo rv"><div class="demo-h"><h3>${c.demoTitle}</h3><span>${c.demo==='contact'?'':'live · try it'}</span></div><div class="demo-body"></div>
+       ${c.plain?`<p class="plain">${c.plain}</p>`:''}${c.fine?`<p class="fine">${c.fine}</p>`:''}</aside></div>
+   <nav class="chap-nav">${prev?`<button class="pill" data-to="${prev}">← ${R[prev].name}</button>`:'<span></span>'}${next?`<button class="pill" data-to="${next}">${R[next].name} →</button>`:`<button class="pill" data-act="end">Read the epilogue →</button>`}</nav>`;
+  cleanup=DEMOS[c.demo]($('.demo-body',chapter),r.c)||null;
+  $('[data-act="back"]',chapter).onclick=()=>closeRegion();
+  $$('[data-to]',chapter).forEach(b=>b.onclick=()=>switchRegion(b.dataset.to));
+  const end=$('[data-act="end"]',chapter); if(end) end.onclick=()=>{closeRegion(true); go('#epilogue');};
+  $('#panelScroll').scrollTop=0;
+  buddy.say(c.bunny,true);
+}
+function revealChapter(delay=0){
+  gsap.fromTo($$('.rv',chapter),{opacity:0,y:34,filter:'blur(10px)'},{opacity:1,y:0,filter:'blur(0px)',duration:.9,stagger:.06,ease:'power3.out',delay,clearProps:'filter,transform'});
+}
+function camTo(id,S){
+  const W=cam.offsetWidth,H=cam.offsetHeight,p=R[id].pin;
+  const px=p[0]/1080*W, py=p[1]/1161*H;
+  return {x:W/2-S*px, y:H/2-S*py, scale:S};
+}
+function openRegion(id){
+  if(busy||panelOpen) return; busy=true; current=id; panelOpen=true;
+  lenis&&lenis.stop();
+  // centre the map in view before diving in
+  const top=$('#map').getBoundingClientRect().top;
+  if(Math.abs(top)>4){ lenis?lenis.scrollTo('#map',{immediate:true,force:true}):scrollTo(0,scrollY+top); }
+  $$(`[data-id="${id}"]`,pinsEl).forEach(x=>x.classList.add('hot'));
+  const tl=gsap.timeline({onComplete:()=>{busy=false;}});
+  tl.set(cam,{transformOrigin:'0 0'})
+    .to(cam,{...camTo(id,3.1),duration:reduce?.01:1.35,ease:'power3.inOut'},0)
+    .to('#mapVeil',{opacity:1,duration:.7,ease:'power1.in'},reduce?0:.75)
+    .add(()=>{renderChapter(id); gsap.set(panel,{visibility:'visible'});},reduce?0:1.0)
+    .fromTo(panel,{opacity:0},{opacity:1,duration:.7,ease:'power2.out'},reduce?0:1.0)
+    .fromTo('.panel-bg',{scale:1.12},{scale:1,duration:1.6,ease:'power3.out'},reduce?0:1.0)
+    .add(()=>revealChapter(0),reduce?0:1.1);
+}
+function switchRegion(id){
+  if(busy) return; busy=true;
+  gsap.to(chapter,{opacity:0,y:-20,filter:'blur(8px)',duration:.45,ease:'power2.in',onComplete:()=>{
+    $$('.hot',pinsEl).forEach(x=>x.classList.remove('hot'));
+    current=id; gsap.set(cam,camTo(id,3.1)); renderChapter(id);
+    gsap.set(chapter,{opacity:1,y:0,filter:'none'}); revealChapter(0); busy=false;}});
+}
+function closeRegion(instant){
+  if(!panelOpen) return; busy=true;
+  if(cleanup){cleanup();cleanup=null;}
+  const done=()=>{panelOpen=false;busy=false;lenis&&lenis.start();$$('.hot',pinsEl).forEach(x=>x.classList.remove('hot'));buddy.setContext('map',true);};
+  if(instant){gsap.set(panel,{opacity:0,visibility:'hidden'});gsap.set(cam,{x:0,y:0,scale:1});gsap.set('#mapVeil',{opacity:0});done();return;}
+  gsap.timeline({onComplete:done})
+    .to(panel,{opacity:0,duration:.5,ease:'power2.in'},0)
+    .set(panel,{visibility:'hidden'},.5)
+    .to('#mapVeil',{opacity:0,duration:.6},.35)
+    .to(cam,{x:0,y:0,scale:1,duration:reduce?.01:1.2,ease:'power3.inOut'},.35);
+}
+addEventListener('keydown',e=>{if(e.key==='Escape'&&panelOpen) closeRegion();});
+addEventListener('resize',()=>{ if(panelOpen&&current) gsap.set(cam,camTo(current,3.1)); });
+
+/* ---------------- demos ---------------- */
+function canvas2d(cv,W,H){const dpr=Math.min(2,devicePixelRatio||1);cv.width=W*dpr;cv.height=H*dpr;const ctx=cv.getContext('2d');ctx.scale(dpr,dpr);return ctx;}
+function loop(fn){let raf,last=performance.now(),alive=true;const f=(now)=>{if(!alive)return;const dt=Math.min(.05,(now-last)/1000);last=now;fn(dt,now/1000);raf=requestAnimationFrame(f);};raf=requestAnimationFrame(f);return()=>{alive=false;cancelAnimationFrame(raf);};}
+const hexA=(h,a)=>{const n=parseInt(h.slice(1),16);return `rgba(${n>>16},${n>>8&255},${n&255},${a})`;};
+
+const DEMOS={
+ /* ---- line follower ---- */
+ robot(root,c){
+  root.innerHTML=`<canvas class="dc"></canvas>
+   <div class="ctl"><label>Steering strength <b class="gv"></b></label><input type="range" min="0.3" max="9" step="0.1" value="2.6"></div>
+   <div class="row"><button class="btn">Restart</button><span class="read"></span></div>`;
+  const W=360,H=232,ctx=canvas2d($('canvas',root),W,H),sl=$('input',root),gv=$('.gv',root),rd=$('.read',root);
+  const pts=[];for(let i=0;i<480;i++){const t=i/480*Math.PI*2,r=86*(1+.2*Math.sin(3*t)+.07*Math.cos(5*t));pts.push([180+r*1.45*Math.cos(t),118+r*.92*Math.sin(t)]);}
+  let s,trail; const reset=()=>{const a=pts[0],b=pts[3];s={x:a[0],y:a[1],th:Math.atan2(b[1]-a[1],b[0]-a[0]),lost:false,e:0,laps:0,prog:0};trail=[];};
+  reset(); $('.btn',root).onclick=reset;
+  const near=(x,y)=>{let bi=0,bd=1e9;for(let i=0;i<pts.length;i++){const dx=pts[i][0]-x,dy=pts[i][1]-y,d=dx*dx+dy*dy;if(d<bd){bd=d;bi=i;}}return [bi,Math.sqrt(bd)];};
+  const upd=()=>gv.textContent=(+sl.value).toFixed(1); sl.oninput=upd; upd();
+  return loop(dt=>{
+   const k=+sl.value, v=64;
+   if(!s.lost){ for(let n=0;n<2;n++){const h=dt/2;
+     const sx=s.x+20*Math.cos(s.th),sy=s.y+20*Math.sin(s.th),[i]=near(sx,sy),q=pts[i];
+     const cross=Math.cos(s.th)*(q[1]-sy)-Math.sin(s.th)*(q[0]-sx); s.e=cross;
+     s.th+=clamp(k*cross*.06,-5,5)*h; s.x+=v*h*Math.cos(s.th); s.y+=v*h*Math.sin(s.th);
+     const [,dist]=near(s.x,s.y); if(dist>24) s.lost=true; }
+     trail.push([s.x,s.y]); if(trail.length>90) trail.shift(); }
+   ctx.clearRect(0,0,W,H);
+   ctx.lineJoin='round';ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));ctx.closePath();
+   ctx.strokeStyle='rgba(255,255,255,.07)';ctx.lineWidth=22;ctx.stroke();ctx.strokeStyle='rgba(251,243,228,.88)';ctx.lineWidth=4;ctx.stroke();
+   ctx.beginPath();trail.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));ctx.strokeStyle=hexA(c,.55);ctx.lineWidth=2;ctx.stroke();
+   const sx=s.x+20*Math.cos(s.th),sy=s.y+20*Math.sin(s.th);
+   ctx.save();ctx.translate(s.x,s.y);ctx.rotate(s.th);
+   ctx.fillStyle=hexA(c,.16);ctx.beginPath();ctx.moveTo(6,0);ctx.lineTo(26,-9);ctx.lineTo(26,9);ctx.closePath();ctx.fill();
+   ctx.fillStyle=c;ctx.shadowColor=c;ctx.shadowBlur=12;ctx.beginPath();ctx.roundRect(-9,-7,18,14,4);ctx.fill();ctx.shadowBlur=0;
+   ctx.fillStyle='#0a0f1f';ctx.fillRect(3,-3,4,6);ctx.restore();
+   ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(sx,sy,2.4,0,7);ctx.fill();
+   if(s.lost){ctx.fillStyle='rgba(5,9,22,.72)';ctx.fillRect(0,0,W,H);ctx.fillStyle='#fbf3e4';ctx.font='800 17px Nunito, sans-serif';ctx.textAlign='center';ctx.fillText('Lost the line!',W/2,H/2-4);ctx.font='700 12px Nunito, sans-serif';ctx.fillStyle='rgba(251,243,228,.7)';ctx.fillText('Change the steering and press Restart',W/2,H/2+16);}
+   const e=s.e; rd.innerHTML=s.lost?'<b>Off the track.</b>':`line is <b>${Math.abs(e).toFixed(1)} px</b> ${Math.abs(e)<1.5?'dead ahead':e>0?'to the right':'to the left'} · ${Math.abs(e)<1.5?'going straight':e>0?'turning right':'turning left'}`;
+  });
+ },
+
+ /* ---- circadian lighting FSM ---- */
+ light(root,c){
+  const P={Adult:[[40,20,5],[200,150,90],[235,240,255],[220,150,80]],Child:[[60,30,10],[210,170,110],[240,240,250],[230,170,100]],Dementia:[[70,25,0],[230,190,120],[250,250,255],[240,160,70]],ICU:[[30,30,40],[180,170,150],[255,255,255],[200,170,120]],PTSD:[[50,25,10],[190,160,120],[220,225,235],[200,150,100]],Migraine:[[25,10,0],[120,90,60],[150,140,130],[120,80,50]],SAD:[[30,15,5],[255,240,220],[255,255,255],[210,150,90]]};
+  const names=Object.keys(P),bands=['NIGHT','DAWN','DAY','DUSK'];
+  root.innerHTML=`<div class="lamp-row"><div class="lamp"></div><div>
+     <div class="chan"><span style="color:#ff8f8f">R</span><span class="bar"><i style="background:#ff8f8f"></i></span><span class="v"></span></div>
+     <div class="chan"><span style="color:#8fefa0">G</span><span class="bar"><i style="background:#8fefa0"></i></span><span class="v"></span></div>
+     <div class="chan"><span style="color:#8fb8ff">B</span><span class="bar"><i style="background:#8fb8ff"></i></span><span class="v"></span></div>
+     <div style="margin-top:8px">state <span class="state"></span></div></div></div>
+   <canvas class="dc" style="margin-top:14px"></canvas>
+   <div class="ctl"><label>Patient profile</label><select>${names.map(n=>`<option>${n}</option>`).join('')}</select></div>
+   <div class="ctl"><label>Hour of day <b class="hv"></b></label><input type="range" class="h" min="0" max="23" value="3"></div>
+   <div class="ctl"><label>Room is already this bright <b class="av"></b></label><input type="range" class="a" min="0" max="255" value="40"></div>
+   <div class="bits"></div>`;
+  const sel=$('select',root),h=$('.h',root),a=$('.a',root),lamp=$('.lamp',root),bars=$$('.chan i',root),vals=$$('.chan .v',root),st=$('.state',root),bits=$('.bits',root);
+  sel.value='Dementia';
+  const W=360,H=96,ctx=canvas2d($('canvas',root),W,H); let duty=[0,0,0],off=0;
+  const bin=(v,n)=>v.toString(2).padStart(n,'0');
+  const upd=()=>{const hr=+h.value,amb=+a.value,p=names.indexOf(sel.value);
+    const b=(hr>=22||hr<6)?0:hr<9?1:hr<17?2:3; const tgt=P[sel.value][b];
+    const out=tgt.map(x=>Math.round(x*(255-amb)/255)); duty=out.map(x=>x/255);
+    lamp.style.background=`radial-gradient(circle at 40% 35%,rgb(${out.map(x=>Math.min(255,x+40))}),rgb(${out}) 60%,rgba(${out},.6))`;
+    lamp.style.boxShadow=`0 0 ${20+out.reduce((s,x)=>s+x,0)/8}px rgba(${out},.75),inset 0 0 20px rgba(0,0,0,.3)`;
+    out.forEach((x,i)=>{bars[i].style.width=(x/255*100)+'%';vals[i].textContent=x;});
+    $('.hv',root).textContent=`${String(hr).padStart(2,'0')}:00`; $('.av',root).textContent=amb;
+    if(st.textContent!==bands[b]){st.textContent=bands[b];gsap.fromTo(st,{scale:1.25},{scale:1,duration:.5,ease:'back.out(3)'});}
+    bits.innerHTML=`hour <b>${bin(hr,5)}</b> · ambient <b>${bin(amb,8)}</b> · profile <b>${bin(p,4)}</b><br>out = target × (255 − ambient) / 255`;};
+  [sel,h,a].forEach(x=>x.addEventListener('input',upd)); upd();
+  const cols=['#ff8f8f','#8fefa0','#8fb8ff'];
+  return loop(dt=>{off=(off+dt*40)%28;ctx.clearRect(0,0,W,H);
+    cols.forEach((col,i)=>{const y0=10+i*29,hgt=18;ctx.strokeStyle=col;ctx.lineWidth=1.6;ctx.beginPath();
+      for(let x=-28+(-off);x<W;x+=28){const on=28*duty[i];ctx.moveTo(x,y0+hgt);ctx.lineTo(x,y0);ctx.lineTo(x+on,y0);ctx.lineTo(x+on,y0+hgt);ctx.lineTo(x+28,y0+hgt);}
+      ctx.stroke();ctx.fillStyle='rgba(251,243,228,.5)';ctx.font='700 10px Nunito, sans-serif';ctx.fillText(`${Math.round(duty[i]*100)}% on`,W-46,y0+hgt-4);});
+  });
+ },
+
+ /* ---- materials ordering (EN / PT) ---- */
+ order(root,c){
+  const T={en:{t:'Materials order',m:'Material',q:'Quantity',send:'Place order',s:['Order placed','Approval email sent to senior management','Approved','Dashboard updated'],d:'Ordered this session',mats:['Conveyor belt','Bearings','Safety helmets','Welding rods','Diesel filters'],u:'units'},
+           pt:{t:'Pedido de materiais',m:'Material',q:'Quantidade',send:'Fazer pedido',s:['Pedido criado','E-mail de aprovação enviado à direção','Aprovado','Painel atualizado'],d:'Pedidos nesta sessão',mats:['Correia transportadora','Rolamentos','Capacetes de segurança','Elétrodos de soldadura','Filtros de diesel'],u:'unid.'}};
+  let lang='en',tot=[0,0,0,0,0],running=false,timers=[];
+  root.innerHTML=`<div class="row" style="margin-top:0;justify-content:space-between"><b class="ot serif" style="font-size:22px;font-weight:400"></b><div class="seg"><button data-l="en" class="on">EN</button><button data-l="pt">PT</button></div></div>
+   <div class="grid2" style="margin-top:12px"><div class="ctl" style="margin:0"><label class="lm"></label><select class="ms"></select></div><div class="ctl" style="margin:0"><label class="lq"></label><input class="inp" type="number" min="1" max="999" value="12"></div></div>
+   <div class="row"><button class="btn go"></button></div><div class="steps"></div><div class="dash"><h5></h5><div class="dbars"></div></div>`;
+  const draw=()=>{const L=T[lang];$('.ot',root).textContent=L.t;$('.lm',root).textContent=L.m;$('.lq',root).textContent=L.q;$('.go',root).textContent=L.send;$('.dash h5',root).textContent=L.d;
+    const si=$('.ms',root).selectedIndex; $('.ms',root).innerHTML=L.mats.map(m=>`<option>${m}</option>`).join(''); $('.ms',root).selectedIndex=Math.max(0,si);
+    const done=$$('.step',root).map(s=>s.classList.contains('done'));
+    $('.steps',root).innerHTML=L.s.map((s,i)=>`<div class="step${done[i]?' done':''}"><i>${i+1}</i>${s}</div>`).join('');
+    const mx=Math.max(1,...tot); $('.dbars',root).innerHTML=L.mats.map((m,i)=>`<div class="dbar"><span>${m}</span><span class="t"><i style="width:${tot[i]/mx*100}%"></i></span><span>${tot[i]}</span></div>`).join('');};
+  draw();
+  $$('.seg button',root).forEach(b=>b.onclick=()=>{lang=b.dataset.l;$$('.seg button',root).forEach(x=>x.classList.toggle('on',x===b));draw();});
+  $('.go',root).onclick=()=>{if(running)return;running=true;$('.go',root).disabled=true;$$('.step',root).forEach(s=>s.classList.remove('done'));
+    const i=$('.ms',root).selectedIndex,q=clamp(Math.round(+$('.inp',root).value||1),1,999);
+    [0,1,2,3].forEach(k=>timers.push(setTimeout(()=>{const s=$$('.step',root)[k];s&&s.classList.add('done');
+      if(k===3){tot[i]+=q;draw();running=false;$('.go',root).disabled=false;}},450+k*750)));};
+  return ()=>timers.forEach(clearTimeout);
+ },
+
+ /* ---- entity matcher ---- */
+ match(root,c){
+  const SYN={shree:'sri',shri:'sri',sree:'sri',laxmi:'lakshmi',luxmi:'lakshmi',lakshmii:'lakshmi',trading:'traders',trader:'traders',trdrs:'traders',enterprise:'enterprises',ent:'enterprises',bros:'brothers','&':'and',n:'and'};
+  const STOP=new Set(['co','company','pvt','private','ltd','limited','the','ms','llp','inc','and']);
+  const clean=s=>s.toLowerCase().replace(/&/g,' and ').replace(/[^a-z0-9 ]/g,' ').split(/\s+/).filter(Boolean).map(w=>SYN[w]||w).filter(w=>!STOP.has(w));
+  const tri=s=>{const t=new Set(),x=`  ${s} `;for(let i=0;i<x.length-2;i++)t.add(x.slice(i,i+3));return t;};
+  const jac=(A,B)=>{let n=0;A.forEach(v=>B.has(v)&&n++);return (A.size+B.size-n)?n/(A.size+B.size-n):0;};
+  const EX=[['Sri Lakshmi Traders','Shree Laxmi Trading Co.'],['Kumar & Sons Pvt Ltd','Kumar and Sons'],['Green Leaf Cafe','Blue Leaf Bakery']];
+  root.innerHTML=`<div class="ctl" style="margin-top:0"><label>Record A</label><input class="inp a" value="${EX[0][0]}"></div>
+   <div class="ctl"><label>Record B</label><input class="inp b" value="${EX[0][1]}"></div>
+   <div class="chips">${EX.map((e,i)=>`<span class="chip x" data-i="${i}">${e[0]} / ${e[1]}</span>`).join('')}</div>
+   <p class="fine" style="margin-top:14px">cleaned A</p><div class="chips ca"></div><p class="fine">cleaned B</p><div class="chips cb"></div>
+   <div class="score"><b class="pc">0%</b><span class="vd"></span></div>`;
+  const A=$('.a',root),B=$('.b',root),o={v:0};
+  const upd=()=>{const a=clean(A.value),b=clean(B.value),sa=new Set(a),sb=new Set(b);
+    const score=a.length&&b.length?.6*jac(tri(a.join(' ')),tri(b.join(' ')))+.4*jac(sa,sb):0;
+    $('.ca',root).innerHTML=a.map(w=>`<span class="chip${sb.has(w)?' m':''}">${w}</span>`).join('')||'<span class="chip">—</span>';
+    $('.cb',root).innerHTML=b.map(w=>`<span class="chip${sa.has(w)?' m':''}">${w}</span>`).join('')||'<span class="chip">—</span>';
+    gsap.to(o,{v:score*100,duration:.6,ease:'power2.out',onUpdate:()=>$('.pc',root).textContent=Math.round(o.v)+'%'});
+    $('.vd',root).textContent=score>=.7?'Same business — merge the records':score>=.42?'Maybe — ask a human to check':'Different businesses';};
+  [A,B].forEach(x=>x.addEventListener('input',upd));
+  $$('.chip.x',root).forEach(ch=>ch.onclick=()=>{const e=EX[+ch.dataset.i];A.value=e[0];B.value=e[1];upd();});
+  upd();
+ },
+
+ /* ---- synthetic EEG + early warning ---- */
+ eeg(root,c){
+  root.innerHTML=`<canvas class="dc"></canvas><div class="meter"><div class="mfill"></div><span class="mlabel"></span></div>
+   <div class="row"><button class="btn inj">Add a warning pattern</button><button class="btn ghost ps">Pause</button></div><p class="read" style="margin-top:10px"></p>`;
+  const W=360,H=190,ctx=canvas2d($('canvas',root),W,H),SR=100,N=600,buf=new Float32Array(N),WIN=100;
+  let idx=0,t=0,n1=0,ev=null,risk=0,ll0=null,paused=false,acc=0,msg='Calm signal. Press the button to start a build-up.';
+  const inj=$('.inj',root),fill=$('.mfill',root),ml=$('.mlabel',root),rd=$('.read',root);
+  inj.onclick=()=>{if(ev)return;ev={s:t,dur:5.5,warned:null,onset:null};inj.disabled=true;msg='Something is building up…';};
+  $('.ps',root).onclick=e=>{paused=!paused;e.target.textContent=paused?'Play':'Pause';};
+  const sample=()=>{t+=1/SR;n1=n1*.8+(Math.random()-.5)*.55;
+    let x=.32*Math.sin(6.283*9.5*t)+.22*Math.sin(6.283*5.7*t+1.3)+.16*Math.sin(6.283*17*t+.4)+n1*.55;
+    if(ev){const el=t-ev.s;
+      if(el<ev.dur){const p=el/ev.dur;x+=Math.pow(p,1.5)*(1.0*Math.sin(6.283*3*t)+1.6*Math.pow(Math.max(0,Math.sin(6.283*3*t+.6)),8));}
+      else if(el<ev.dur+1.7){if(!ev.onset){ev.onset=t;msg=ev.warned?`⚠ Warned <b>${(ev.onset-ev.warned).toFixed(1)} s</b> before the simulated onset.`:'Missed this one — the build-up was too subtle.';}
+        x+=(Math.random()-.5)*3.4+1.5*Math.sin(6.283*4*t);}
+      else{ev=null;inj.disabled=false;}}
+    buf[idx]=x;idx=(idx+1)%N;
+    let ll=0;for(let i=1;i<=WIN;i++){const a=buf[(idx-i+N)%N];ll+=a*a;} ll/=WIN;
+    if(!ev||ll0===null) ll0=ll0===null?ll:ll0*.995+ll*.005;
+    const r=clamp((ll/ll0-1.35)/1.4,0,1); risk+=(r-risk)*.03;
+    if(ev&&!ev.warned&&!ev.onset&&risk>.6){ev.warned=t;msg='⚠ Early warning raised.';}};
+  for(let i=0;i<N;i++) sample();
+  return loop(dt=>{
+    if(!paused){acc+=dt*SR;while(acc>=1){sample();acc--;}}
+    ctx.clearRect(0,0,W,H);
+    ctx.strokeStyle='rgba(255,255,255,.05)';ctx.lineWidth=1;for(let y=19;y<H;y+=38){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+    const bx=W-WIN*(W/N), onset=ev&&ev.onset;
+    ctx.fillStyle=onset?'rgba(255,138,122,.14)':hexA(c,.1);ctx.fillRect(bx,0,W-bx,H);ctx.strokeStyle=onset?'#ff8a7a':hexA(c,.7);ctx.setLineDash([4,4]);ctx.strokeRect(bx+.5,.5,W-bx-1,H-1);ctx.setLineDash([]);
+    ctx.fillStyle=onset?'#ff8a7a':c;ctx.font='800 10px Nunito, sans-serif';ctx.textAlign='right';ctx.fillText(onset?'SIMULATED ONSET':'WHAT THE MODEL READS',W-6,14);ctx.textAlign='left';
+    ctx.beginPath();for(let i=0;i<N;i++){const v=buf[(idx+i)%N],x=i*(W/N),y=clamp(H/2-v*26,3,H-3);i?ctx.lineTo(x,y):ctx.moveTo(x,y);}
+    ctx.strokeStyle='rgba(251,243,228,.9)';ctx.lineWidth=1.3;ctx.stroke();
+    if(ev&&ev.warned&&!onset){ctx.fillStyle='#f6d58e';ctx.font='800 11px Nunito, sans-serif';ctx.fillText('⚠ EARLY WARNING',8,16);}
+    fill.style.width=(risk*100).toFixed(1)+'%';ml.textContent=risk<.3?'risk: calm':risk<.6?'risk: rising':'risk: warning';
+    rd.innerHTML=msg;
+  });
+ },
+
+ /* ---- SHAP vs LIME agreement ---- */
+ xai(root,c){
+  const F=['Delta power','Theta power','Alpha power','Beta power','Gamma power','Line length','Spectral entropy','Hjorth mobility','Hjorth complexity','Variance','Kurtosis','Zero crossings'];
+  const S=[.62,.48,.21,.33,.71,.80,.55,.40,.29,.45,.18,.12], L=[.58,.30,.25,.41,.66,.74,.36,.52,.22,.49,.27,.10];
+  let mode='both';
+  root.innerHTML=`<div class="row" style="margin-top:0;justify-content:space-between"><div class="seg"><button data-m="shap">SHAP</button><button data-m="lime">LIME</button><button data-m="both" class="on">Both</button></div></div>
+   <div class="ctl"><label>Keep the top <b class="kv"></b> features</label><input type="range" min="3" max="8" value="5"></div>
+   <div class="legend"><span><i style="background:#a9b6ff"></i>SHAP</span><span><i style="background:#f6b8e6"></i>LIME</span><span style="color:var(--cream)">bright = kept by both</span></div>
+   <div class="xrows" style="height:${F.length*28}px">${F.map(f=>`<div class="xrow"><span>${f}</span><span class="bars"><i class="s"></i><i class="l"></i></span></div>`).join('')}</div>
+   <div class="score"><b class="pc">0%</b><span class="vd"></span></div>`;
+  const rows=$$('.xrow',root),sl=$('input',root);
+  const rank=a=>a.map((v,i)=>[v,i]).sort((x,y)=>y[0]-x[0]).map(x=>x[1]);
+  const upd=()=>{const k=+sl.value;$('.kv',root).textContent=k;
+    const ts=new Set(rank(S).slice(0,k)),tl=new Set(rank(L).slice(0,k));
+    const key=mode==='shap'?S:mode==='lime'?L:S.map((v,i)=>(v+L[i])/2); const ord=rank(key);
+    const agree=[...ts].filter(i=>tl.has(i));
+    ord.forEach((fi,pos)=>{const r=rows[fi];r.style.top=(pos*28)+'px';
+      const [bs,bl]=$$('i',r);bs.style.width=mode==='lime'?'0%':(S[fi]*100)+'%';bl.style.width=mode==='shap'?'0%':(L[fi]*100)+'%';
+      const inTop=mode==='shap'?ts.has(fi):mode==='lime'?tl.has(fi):(ts.has(fi)||tl.has(fi));
+      r.classList.toggle('top',inTop); r.classList.toggle('keep',ts.has(fi)&&tl.has(fi));});
+    $('.pc',root).textContent=Math.round(agree.length/k*100)+'%';
+    $('.vd',root).innerHTML=`agreement · both pick <b>${agree.length}</b> of their top ${k} → keep ${agree.map(i=>F[i]).join(', ')}`;};
+  sl.oninput=upd;
+  $$('.seg button',root).forEach(b=>b.onclick=()=>{mode=b.dataset.m;$$('.seg button',root).forEach(x=>x.classList.toggle('on',x===b));upd();});
+  requestAnimationFrame(upd);
+ },
+
+ /* ---- Eden: contact ---- */
+ contact(root,c){
+  root.innerHTML=`<p class="but" style="font-size:22px">If you’re building something where the problem is specific and the users are real, I’d love to hear about it.</p>
+   <div class="contact"><span class="mail">parnika.kumar2024@vitstudent.ac.in</span></div>
+   <div class="row"><button class="btn cp">Copy email</button><button class="btn ghost ep">Send a paper boat ↓</button></div>`;
+  $('.cp',root).onclick=async e=>{try{await navigator.clipboard.writeText('parnika.kumar2024@vitstudent.ac.in');e.target.textContent='Copied ✓';}catch(_){e.target.textContent='Select the address above';}};
+  $('.ep',root).onclick=()=>{closeRegion(true);go('#epilogue');};
+ }
+};
+
+/* ---------------- epilogue ---------------- */
+gsap.timeline({scrollTrigger:{trigger:'#epilogue',start:'top top',end:'bottom bottom',scrub:1}})
+  .fromTo('.boats',{scale:1.18,xPercent:3},{scale:1,xPercent:0,ease:'none',duration:10},0)
+  .fromTo('.ep-line',{opacity:0,x:-90,filter:'blur(12px)'},{opacity:1,x:0,filter:'blur(0px)',stagger:.9,duration:2.2,ease:'power2.out'},.6);
+gsap.from('.cred>*',{opacity:0,y:40,filter:'blur(8px)',stagger:.1,duration:1,ease:'power3.out',clearProps:'filter',scrollTrigger:{trigger:'#credits',start:'top 70%',once:true}});
+
+/* ---------------- bunny travel buddy ---------------- */
+const buddy=(()=>{
+  const el=$('#buddy'),bun=$('.bun',el),bub=$('#bubble'),txt=$('p',bub);
+  let x=0,busy=false,hideT,ctx='hero',lineIdx=0,entered=false;
+  const LINES={
+   hero:['Hi! I’m your travel buddy. I’ll walk you through Parnika’s story — scroll down when you’re ready.','<small>psst… double-click me and I’ll hop</small>'],
+   prologue:['This is where it started. Keep scrolling slowly — the birds know the way.'],
+   tunnel:['Hold on to your ears — we’re going through!'],
+   map:['Each glowing pin is a chapter. Tap one and we’ll fly in.','The dotted line is the route. Start at pin 1 if you like things in order.'],
+   epilogue:['That’s the story so far. Parnika’s email is right there →'],
+   credits:['The art belongs to thatgamecompany. Go play Sky! ✦']};
+  const IDLE=['Double-click me and I’ll hop!','Every pin on the map has something you can try.','The art is from Sky: Children of Light — credits on the last page.','I’ve been told I’m the most important part of this website.'];
+  const W=()=>innerWidth, homeX=()=>W()-62-22;
+  function place(){gsap.set(el,{x});el.classList.toggle('left',x<W()/2);}
+  function say(html,force){clearTimeout(hideT);txt.innerHTML=html;bub.classList.add('show');hideT=setTimeout(()=>bub.classList.remove('show'),force?7000:5600);}
+  function sparkle(){const r=el.getBoundingClientRect();for(let i=0;i<7;i++){const s=document.createElement('span');s.className='spark';s.textContent='✦';document.body.appendChild(s);
+      const a=Math.PI+Math.random()*Math.PI,d=24+Math.random()*30;gsap.fromTo(s,{x:r.left+r.width/2-5,y:r.bottom-12,scale:.4+Math.random()*.6,opacity:1},{x:`+=${Math.cos(a)*d}`,y:`+=${Math.sin(a)*d}`,opacity:0,rotate:Math.random()*180,duration:.8+Math.random()*.4,ease:'power2.out',onComplete:()=>s.remove()});}}
+  function hop(to){if(busy)return;busy=true;bub.classList.remove('show');
+    const w=W(); const nx=to??clamp(x+(Math.random()<.5?-1:1)*(70+Math.random()*Math.min(260,w*.3)),10,w-72); const dir=Math.sign(nx-x)||1;
+    const tl=gsap.timeline({onComplete:()=>{busy=false;}});
+    tl.to(bun,{scaleX:1.2,scaleY:.78,duration:.13,ease:'power2.out'})
+      .addLabel('j')
+      .to(el,{x:nx,duration:.64,ease:'power1.inOut',onUpdate:()=>{x=gsap.getProperty(el,'x');}},'j')
+      .to(bun,{y:-92,scaleX:.9,scaleY:1.14,rotate:dir*12,duration:.32,ease:'power2.out'},'j')
+      .to(bun,{y:0,scaleX:1,scaleY:1,rotate:0,duration:.32,ease:'power2.in'},'j+=.32')
+      .to(bun,{scaleX:1.22,scaleY:.8,duration:.09,ease:'power2.out'})
+      .add(sparkle,'-=.05')
+      .to(bun,{scaleX:1,scaleY:1,duration:.6,ease:'elastic.out(1,.35)'})
+      .add(()=>{x=nx;el.classList.toggle('left',x<w/2);});
+    return tl;}
+  function talk(){const L=LINES[ctx]||[];const pool=[...L,...IDLE];say(pool[lineIdx++%pool.length]);}
+  function setContext(k,quiet){if(k===ctx&&!quiet)return;ctx=k;if(entered&&!panelOpen&&!quiet)say(LINES[k][0]);}
+  function enter(){if(entered)return;entered=true;x=W()+30;place();gsap.set(el,{opacity:1});
+    hop(homeX()).add(()=>say(LINES.hero[0]+'<small>double-click me and I’ll hop</small>',true));}
+  // click = talk, double-click / double-tap = hop
+  let lastUp=0,talkT;
+  el.addEventListener('pointerup',()=>{const now=performance.now();
+    if(now-lastUp<320){clearTimeout(talkT);lastUp=0;hop();}else{lastUp=now;talkT=setTimeout(talk,320);}});
+  el.addEventListener('keydown',e=>{if(e.key==='Enter')talk();if(e.key===' '){e.preventDefault();hop();}});
+  addEventListener('resize',()=>{x=clamp(x,10,W()-72);place();});
+  ['prologue','tunnel','map','epilogue','credits','hero'].forEach(id=>ScrollTrigger.create({trigger:'#'+id,start:'top 55%',end:'bottom 45%',onToggle:s=>{if(s.isActive)setContext(id);}}));
+  return {enter,say,setContext,hop};
+})();
+
+addEventListener('load',()=>ScrollTrigger.refresh());
+})();
+</script>
+</body>
+</html>
