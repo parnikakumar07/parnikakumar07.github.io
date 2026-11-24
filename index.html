@@ -87,8 +87,21 @@ button{background:none;border:0;cursor:pointer}
 .tunnel-text p{margin-top:12px;font-weight:700;font-size:15px;text-shadow:0 2px 14px rgba(10,30,20,.8)}
 
 /* ---------- map ---------- */
-#map{position:relative;min-height:100vh;min-height:100svh;background:var(--night);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:64px 0 28px;overflow:hidden}
-.map-cam{position:relative;width:min(94vw,calc((100vh - 118px) * 1080 / 1161));aspect-ratio:1080/1161;container-type:inline-size;will-change:transform}
+#map{position:relative;height:560vh;background:var(--night)}
+.map-stage{background:var(--night)}
+.map-follow{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}
+.map-cam{position:relative;container-type:inline-size}
+#routeHead{filter:drop-shadow(0 0 6px #fff6d8) drop-shadow(0 0 16px #ffd98a);transition:opacity .3s}
+.pin,.lbl{transition:opacity .6s}
+.pin.off{opacity:.22}
+.lbl.off .in{color:rgba(251,243,228,.26);border-color:rgba(255,255,255,.08);box-shadow:0 0 2.2cqw rgba(0,0,0,.7)}
+.lbl.off small{opacity:.35}
+.lbl .in{transition:transform .45s cubic-bezier(.2,.9,.3,1.4),box-shadow .45s,color .6s,border-color .6s}
+.pin.off .in::before{animation:none;opacity:0}
+.map-cap{position:absolute;left:26px;bottom:26px;z-index:4;width:min(340px,calc(100vw - 110px));padding:14px 18px 15px;border-radius:18px;background:rgba(8,11,22,.76);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.13);cursor:pointer;box-shadow:0 18px 40px rgba(0,0,0,.35)}
+.map-cap .k{font-size:11px}
+.map-cap h3{font-family:var(--serif);font-weight:400;font-size:26px;line-height:1.1;margin:.2em 0 .25em;font-variation-settings:"SOFT" 100}
+.map-cap p:last-child{font-size:13px;font-weight:700;color:var(--muted)}
 .map-art{position:absolute;inset:0;will-change:transform,opacity,filter}
 .map-art img{width:100%;height:100%;filter:blur(.75px) saturate(1.08) brightness(.88)}
 .logo-cover{position:absolute;left:-1%;top:1%;width:38%;height:28%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;pointer-events:none;background:radial-gradient(ellipse 50% 50% at 50% 50%,rgba(8,11,22,.99) 60%,rgba(8,11,22,.85) 75%,rgba(8,11,22,0) 100%)}
@@ -110,8 +123,6 @@ button{background:none;border:0;cursor:pointer}
 .lbl:hover .in,.lbl:focus-visible .in,.lbl.hot .in{transform:scale(1.07);box-shadow:0 0 2.2cqw rgba(0,0,0,.7),0 0 2.6cqw color-mix(in srgb,var(--c) 55%,transparent)}
 .pin:focus-visible,.lbl:focus-visible{outline:none}
 .map-veil{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(255,240,220,.0),var(--night) 70%);opacity:0;pointer-events:none;z-index:5}
-.map-hint{margin-top:12px;font-size:13px;font-weight:700;color:var(--muted);text-align:center;padding:0 20px;line-height:1.5}
-.map-hint b{color:var(--cream)}
 
 /* ---------- chapter panel ---------- */
 .panel{position:fixed;inset:0;z-index:45;visibility:hidden;opacity:0}
@@ -181,7 +192,7 @@ select option{background:#121a33}
 .read b{color:var(--cream)}
 .meter{position:relative;height:26px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:12px}
 .meter .mfill{position:absolute;inset:0;width:0;background:linear-gradient(90deg,#7be0a8,#f6d58e 55%,#ff8a7a);border-radius:99px}
-.meter .mlabel{position:absolute;inset:0;display:flex;align-items:center;padding-left:12px;font-size:12px;font-weight:800;color:#0a0f1f;mix-blend-mode:normal}
+.meter .mlabel{position:absolute;inset:0;display:flex;align-items:center;padding-left:12px;font-size:12px;font-weight:800;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.7)}
 .lamp-row{display:grid;grid-template-columns:120px 1fr;gap:18px;align-items:center}
 .lamp{width:120px;height:120px;border-radius:50%;transition:background .5s,box-shadow .5s;position:relative}
 .lamp::after{content:'';position:absolute;inset:18%;border-radius:50%;background:rgba(255,255,255,.35);filter:blur(10px)}
@@ -268,6 +279,35 @@ select option{background:#121a33}
 .snd.on .bars i:nth-child(2){animation-delay:-.4s}.snd.on .bars i:nth-child(3){animation-delay:-.75s}.snd.on .bars i:nth-child(4){animation-delay:-.2s}
 @keyframes eq{0%,100%{height:3px}50%{height:12px}}
 @media(max-width:560px){.snd .bars{display:none}.snd .lab{font-size:14px}}
+.xtabs{margin-bottom:6px}
+.crits{display:grid;gap:10px;margin-top:10px}
+.crit .ctop{display:flex;justify-content:space-between;font-size:12.5px;font-weight:800;color:var(--muted)}
+.crit .ctop b{color:var(--cream)}
+.crit input{margin:7px 0 6px}
+.lv{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.lv i{font-style:normal;font-size:10.5px;font-weight:800;text-align:center;padding:2px 0;border-radius:6px;color:rgba(251,243,228,calc(.35 + var(--m,0) * .65));background:color-mix(in srgb,var(--c) calc(var(--m,0) * 55%),rgba(255,255,255,.05));transition:background .2s,color .2s}
+.rules{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+.rblk p{font-size:10.5px;font-weight:700;color:var(--muted);margin-bottom:5px;text-align:center}
+.rblk b{color:var(--cream)}
+.rg{display:grid;grid-template-columns:repeat(3,1fr);gap:3px}
+.rg span{aspect-ratio:1;border-radius:5px;background:rgba(255,255,255,.05);box-shadow:inset 0 0 0 1px rgba(255,255,255,.07);position:relative;overflow:hidden}
+.rg span::after{content:'';position:absolute;inset:0;border-radius:5px;background:var(--c);opacity:var(--w,0);transition:opacity .25s}
+.flist{display:grid;gap:3px;margin-top:12px}
+.frow{display:grid;grid-template-columns:118px 1fr 34px 82px;gap:8px;align-items:center;font-size:12px;font-weight:700;padding:3px 6px;border-radius:8px;color:rgba(251,243,228,.75)}
+.frow .fb{height:7px;border-radius:7px;background:rgba(255,255,255,.07);overflow:hidden}
+.frow .fb i{display:block;height:100%;width:0;background:rgba(251,243,228,.45);border-radius:7px;transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.frow.pick{color:#fff}
+.frow.pick .fb i{background:var(--c)}
+.frow .fv{text-align:right}
+.frow .ft{font-size:10.5px;color:var(--muted);text-align:right}
+.frow.pick .ft{color:var(--c);font-weight:800}
+.xbars{margin-top:12px}
+.xb{display:grid;grid-template-columns:118px 1fr 44px;gap:8px;align-items:center;font-size:12px;font-weight:700;margin:5px 0}
+.xb .xt{position:relative;height:10px;background:rgba(255,255,255,.05);border-radius:6px}
+.xb .xt::before{content:'';position:absolute;left:50%;top:-3px;bottom:-3px;width:1px;background:rgba(255,255,255,.25)}
+.xb .xt i{position:absolute;top:0;bottom:0;border-radius:6px}
+.xb b{text-align:right;font-size:11.5px}
+@media(max-width:600px){.frow{grid-template-columns:92px 1fr 30px 70px;font-size:11.5px}.xb{grid-template-columns:96px 1fr 40px}.rules{gap:8px}}
 @media (prefers-reduced-motion: reduce){
   .pin .in::before,#buddy .idle,.panel-bg img,.cue i{animation:none}
 }
@@ -275,11 +315,11 @@ select option{background:#121a33}
 @media(max-width:600px){
   #buddy{width:50px;height:48px;bottom:12px}
   .bubble{font-size:12.5px;max-width:min(220px,64vw);padding:8px 12px}
-  #map{min-height:auto;padding:84px 0 48px}
-  .map-cam{width:100vw}
+  #map{height:500vh}
+  .map-cap{left:12px;bottom:14px;width:calc(100vw - 84px);padding:11px 14px}
+  .map-cap h3{font-size:21px}
   .lbl .in{font-size:max(10.5px,1.55cqw);padding:3px 8px 4px}
   .lbl small{font-size:max(8.5px,1.1cqw)}
-  .map-hint{font-size:12.5px}
 }
 @media(max-width:560px){.brand{font-size:18px}.topnav button{padding:6px 10px;font-size:11.5px}.topbar{padding:12px 14px}}
 </style>
@@ -306,7 +346,7 @@ select option{background:#121a33}
     <div class="hero-copy">
       <p class="eyebrow">a storybook portfolio</p>
       <h1 class="title"><span class="word" data-split>Parnika</span> <span class="word it" data-split>Kumar</span></h1>
-      <p class="sub">Computer Science (AI &amp; ML) at VIT, Vellore. Two research papers, one funded startup and an internship across an ocean — told the way it actually happened.</p>
+      <p class="sub">Some problems have a name and a face — a patient awake at 3 a.m., a plant clerk who works in Portuguese, someone who needs a few minutes’ warning. This is the map of how I learned to build for them.</p>
     </div>
   </div>
   <div class="cue">scroll to begin<i></i></div>
@@ -323,7 +363,7 @@ select option{background:#121a33}
       <div class="beat"><p class="k">Vellore · 2024 – now</p><h2>Into <em>AI &amp; ML.</em></h2><p>B.Tech CSE (Artificial Intelligence &amp; Machine Learning) at VIT — CGPA 8.61. Algorithms, computer architecture, theory of computation, computational geometry, randomized algorithms: all of them show up again on this map.</p></div>
       <div class="beat"><p class="k">Two years in</p><h2>The count <em>so far.</em></h2>
         <div class="stats">
-          <div class="stat"><b data-count="2">0</b><span>research papers — IEEE (published) &amp; Springer (accepted)</span></div>
+          <div class="stat"><b data-count="2">0</b><span>research papers — IEEE (published) &amp; Springer (accepted, first author)</span></div>
           <div class="stat"><b data-count="40000" data-prefix="₹">₹0</b><span>raised from a university panel for a startup</span></div>
           <div class="stat"><b data-count="1">0</b><span>internship on another continent — Mozambique</span></div>
           <div class="stat"><b data-count="4">0</b><span>team builds where my role changed every time</span></div>
@@ -346,19 +386,22 @@ select option{background:#121a33}
 </section>
 
 <!-- MAP -->
-<section id="map" aria-label="Journey map">
-  <div class="map-cam" id="cam">
-    <div class="map-art"><img src="map.jpg" alt="An illustrated world map of floating islands and regions, relabelled with the chapters of Parnika's journey."></div>
-    <div class="logo-cover"><small>the world of</small><strong>Parnika</strong><em>a map of how I got here</em></div>
-    <svg class="route" viewBox="0 0 1080 1161" preserveAspectRatio="none" aria-hidden="true">
-      <defs><mask id="routeMask" maskUnits="userSpaceOnUse" x="0" y="0" width="1080" height="1161"><path id="routeReveal" fill="none" stroke="#fff" stroke-width="14" stroke-linecap="round"/></mask></defs>
-      <path id="routeGlow" fill="none" stroke="rgba(251,243,228,.18)" stroke-width="6" stroke-linecap="round" mask="url(#routeMask)"/>
-      <path id="routeDots" fill="none" stroke="rgba(251,243,228,.85)" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="0.1 11" mask="url(#routeMask)"/>
-    </svg>
-    <div id="pins"></div>
+<section id="map" class="scene" aria-label="Journey map">
+  <div class="sticky map-stage">
+    <div class="map-follow" id="follow"><div class="map-cam" id="cam">
+      <div class="map-art"><img src="map.jpg" alt="An illustrated world map of floating islands and regions, relabelled with the chapters of Parnika's journey."></div>
+      <div class="logo-cover"><small>the world of</small><strong>Parnika</strong><em>a map of how I got here</em></div>
+      <svg class="route" viewBox="0 0 1080 1161" preserveAspectRatio="none" aria-hidden="true">
+        <defs><mask id="routeMask" maskUnits="userSpaceOnUse" x="0" y="0" width="1080" height="1161"><path id="routeReveal" fill="none" stroke="#fff" stroke-width="14" stroke-linecap="round"/></mask></defs>
+        <path id="routeGlow" fill="none" stroke="rgba(251,243,228,.18)" stroke-width="6" stroke-linecap="round" mask="url(#routeMask)"/>
+        <path id="routeDots" fill="none" stroke="rgba(251,243,228,.85)" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="0.1 11" mask="url(#routeMask)"/>
+        <circle id="routeHead" r="7" fill="#fffbe8"/>
+      </svg>
+      <div id="pins"></div>
+    </div></div>
     <div class="map-veil" id="mapVeil"></div>
+    <div class="map-cap" id="mapCap" role="button" tabindex="0"></div>
   </div>
-  <p class="map-hint"><b>Tap a glowing place</b> — each one opens a chapter. The dotted line is the route I'd walk you along.</p>
 </section>
 
 <!-- EPILOGUE -->
@@ -425,7 +468,7 @@ if(!reduce && window.Lenis){
   gsap.ticker.add(t=>lenis.raf(t*1000));
   gsap.ticker.lagSmoothing(0);
 }
-const go=(sel)=>{const el=$(sel); if(!el) return; lenis?lenis.scrollTo(el,{duration:2,easing:t=>1-Math.pow(1-t,4)}):el.scrollIntoView({behavior:reduce?'auto':'smooth'});};
+const go=(sel)=>{const el=$(sel); if(!el) return; let t=el; if(sel==='#map') t=el.offsetTop+(el.offsetHeight-innerHeight)*.9; lenis?lenis.scrollTo(t,{duration:2,easing:t=>1-Math.pow(1-t,4)}):(typeof t==='number'?scrollTo({top:t,behavior:reduce?'auto':'smooth'}):el.scrollIntoView({behavior:reduce?'auto':'smooth'}));};
 $$('[data-go]').forEach(b=>b.addEventListener('click',()=>{ if(panelOpen) closeRegion(true); go(b.dataset.go); }));
 $$('[data-copy]').forEach(b=>b.addEventListener('click',async()=>{ try{await navigator.clipboard.writeText(b.dataset.copy); b.textContent='Copied ✓';}catch(e){b.textContent='Select the address to copy';} setTimeout(()=>b.textContent='Copy email',2200); }));
 
@@ -521,21 +564,21 @@ const R={
  prairie:{name:'Prairie of Light',sub:'IEEE paper · 2026',c:'#a9ec9f',pin:[292,872],lbl:[198,970],w:20},
  forest:{name:'Forest Across the Sea',sub:'Mozambique · 2025',c:'#7fdcef',pin:[172,690],lbl:[125,587],w:22},
  valley:{name:'Valley of Teams',sub:'4 team builds',c:'#ff9e88',pin:[562,548],lbl:[375,472],w:22},
- wasteland:{name:'The Wasteland Year',sub:'₹40,000 startup',c:'#e4ef93',pin:[792,640],lbl:[918,755],w:22},
- vault:{name:'Vault of Explanations',sub:'Springer paper · XAI',c:'#aab7ff',pin:[762,422],lbl:[906,365],w:23},
+ wasteland:{name:'Carrying the Light',sub:'₹40,000 startup',c:'#e4ef93',pin:[792,640],lbl:[918,755],w:22},
+ vault:{name:'Vault of Explanations',sub:'Springer · first author',c:'#aab7ff',pin:[762,422],lbl:[906,365],w:23},
  eden:{name:'Eden',sub:'Summer 2027',c:'#ffb46e',pin:[526,298],lbl:[410,225],w:13}
 };
 const IMG='';
 const C={
  dawn:{kicker:'Pin 1 · Jamshedpur → Vellore · 2022 – now',title:'Isle of Beginnings',
   not:'Strong academic background.',
-  but:'Two board exams at 97.4% and 90%, then a deliberate specialization: CSE with AI &amp; ML at VIT, CGPA 8.61 — and a weekend spent teaching a tiny robot to see a line.',
+  but:'Two board exams at 97.4% and 90%, then a deliberate specialization: CSE with AI &amp; ML at VIT, CGPA 8.61 — and a workshop spent teaching a tiny robot to see a line.',
   beats:[
    '<span class="tag">School</span>DBMS English School, Jamshedpur — <strong>97.4%</strong> in ICSE Class X (2022), <strong>90%</strong> in ISC Class XII (2024).',
    '<span class="tag">University</span>B.Tech CSE (Artificial Intelligence &amp; Machine Learning) at VIT, Vellore — <strong>CGPA 8.61/10</strong>, graduating 2028.',
    '<span class="tag">The theory</span>Design &amp; Analysis of Algorithms, Computer Architecture, Theory of Computation, Computational Geometry, Randomized Algorithms. These are the courses the later chapters quietly lean on.',
-   '<span class="tag">Side quest</span>A 3-day hands-on Edge AI &amp; Robotics workshop at VIT on an <strong>NVIDIA Jetson Nano / JetBot</strong>, where I built a vision-based robot that follows a line on its own.',
-   '<span class="tag">Toolkit</span>Python, Java, C/C++, Verilog HDL, R · scikit-learn, Jupyter · Power Apps, Power BI, Power Automate · ModelSim · Figma · Git.'
+   '<span class="tag">Side quest</span>A 3-day hands-on Edge AI &amp; Robotics workshop on an <strong>NVIDIA Jetson Nano / JetBot</strong>, where I built a vision-based robot that follows a line on its own.',
+   '<span class="tag">Toolkit</span>Python, Java, C/C++, Verilog HDL, R · scikit-learn, XGBoost, NumPy, Pandas · SHAP &amp; LIME · Power Apps, Power BI, Power Automate · ModelSim · Git · currently learning PyTorch.'
   ],
   stats:[['97.4%','ICSE Class X'],['90%','ISC Class XII'],['8.61','CGPA at VIT'],['2028','graduating']],
   demo:'robot',demoTitle:'Steer the line-follower',
@@ -548,7 +591,7 @@ const C={
   beats:[
    'I co-designed a <strong>closed-loop finite-state machine in Verilog HDL</strong> that decides, every moment, what colour and brightness a patient’s light should be.',
    'I architected the personalization: a <strong>5-bit hour</strong>, an <strong>8-bit ambient-light reading</strong> and a <strong>4-bit profile selector</strong> drive <strong>16 patient-specific profiles</strong> — child, adult, dementia, ICU, PTSD, migraine, SAD and more — each with its own colour targets through the day.',
-   'I derived the <strong>inverse-ambient PWM scaling</strong>: the brighter the room already is, the more each 8-bit RGB channel dims itself. Less glare, less overexposure, less wasted energy.',
+   'I designed the <strong>adaptive brightness scaling</strong>: the brighter the room already is, the more each 8-bit RGB channel dims itself. Less glare, less overexposure, less wasted energy.',
    'We compared it against <strong>8 existing circadian-lighting approaches</strong>. The gaps we found — real-time closed-loop control and per-patient adaptation — are exactly what this design addresses.',
    'Verified in ModelSim: <strong>single-cycle state transitions at 50 MHz</strong> and a glitch-free <strong>~195 kHz PWM</strong>, far above the flicker the eye can notice. Ready for an FPGA.'
   ],
@@ -559,15 +602,15 @@ const C={
   bunny:'Set the hour to 3 a.m. and pick “Dementia”. Then make the room brighter and watch it dim.'},
  forest:{bg:'forest-rain.jpg',kicker:'Pin 3 · Vulcan International (Jindal Group) · Moatize, Tete, Mozambique · June 2025',title:'Forest Across the Sea',
   not:'Built an app during an internship.',
-  but:'The Coal Production Plants were ordering materials by hand, and many of the people placing those orders work in Portuguese. I built the ordering app they could actually use.',
+  but:'I arrived not knowing the Power Platform. The IT team taught me as I went, and I built the app that replaced the coal plants’ paper-and-phone ordering — in English and in Portuguese.',
   beats:[
    '<span class="tag">The ask</span>Replace a <strong>fully manual materials-ordering process</strong> at Vulcan’s Coal Production Plants (CPPs).',
-   '<span class="tag">The app</span>I designed and delivered it in <strong>Microsoft Power Apps</strong> — low-code, built inside the tools the company already runs on.',
-   '<span class="tag">No more chasing</span>With <strong>Power Automate</strong>, placing an order automatically sends the permission-request email to senior management.',
+   '<span class="tag">Learning on the job</span>I learned <strong>Microsoft Power Apps</strong> under the IT team’s mentorship and built the low-code ordering app myself, inside the tools the company already runs on.',
+   '<span class="tag">Fewer follow-ups</span>With <strong>Power Automate</strong>, placing an order automatically sends the permission-request email to senior management, so nobody has to chase approvals by hand.',
    '<span class="tag">Seeing it live</span>A <strong>Power BI dashboard</strong> sits inside the app, so plant and IT staff can watch orders and consumption in real time.',
-   '<span class="tag">Two languages</span>Every screen works in <strong>English and Portuguese</strong>, so staff at the Moatize site could use it in their own language.'
+   '<span class="tag">Two languages</span>Every screen works in <strong>English and Portuguese</strong>, so non-English-speaking staff at the Moatize site could use it too.'
   ],
-  stats:[['2','languages, every screen'],['3','Power Platform tools'],['1','manual process replaced'],['1','continent away from home']],
+  stats:[['2','languages, every screen'],['3','Power Platform tools learned'],['1','manual process replaced'],['1','continent away from home']],
   demo:'order',demoTitle:'Place an order',
   plain:'<b>In plain words:</b> instead of paperwork and follow-up calls, someone at the plant picks a material and a quantity. The app emails the manager for approval on its own, and the dashboard updates for everyone. Flip the language and nothing breaks.',
   fine:'A small browser mock of the flow. The real app was built in Microsoft Power Apps for Vulcan.',
@@ -586,40 +629,42 @@ const C={
   plain:'<b>In plain words:</b> people type the same business in different ways — “Shree” or “Sri”, “Trading Co.” or “Traders”. The matcher first cleans both names into a standard form, then measures how much they overlap. High overlap: probably the same business. In-between: a human should check.',
   fine:'The idea in miniature. The real system runs inside an Oracle database with SQL and PL/SQL.',
   bunny:'Type two spellings of the same shop and see if the matcher catches it.'},
- wasteland:{kicker:'Pin 5 · Student Startup Venture (SSV), VIT · final review December 2026',title:'The Wasteland Year',
+ wasteland:{kicker:'Pin 5 · Student Startup Venture (SSV), VIT · final review December 2026',title:'Carrying the Light',
   not:'Predict seizures with AI.',
   but:'A non-invasive wearable that reads EEG as a sequence and raises an early warning before a seizure begins — built as a preventive alert, deliberately not a diagnosis.',
   beats:[
    'I co-founded a Student Startup Venture at VIT and pitched the business plan to a university panel. We came away with <strong>₹40,000</strong> to build a prototype.',
-   'I led the <strong>ML model</strong> and <strong>product design</strong> workstreams. The model is an <strong>LSTM</strong>, because a seizure isn’t one snapshot — it builds up over time, and an LSTM is built to read time.',
-   'We compared approaches, <strong>XGBoost against LSTM</strong>, and set our bar using published work: Tsiouris et al. (2018) report <strong>&gt;99% sensitivity</strong> on public EEG data. That number is theirs, not ours — it’s the target.',
+   'I lead the <strong>end-to-end ML</strong> — preprocessing, architecture and training. I’m building and comparing <strong>XGBoost</strong> and <strong>LSTM</strong> models, because a seizure isn’t one snapshot: it builds up over time, and an LSTM is built to read time.',
+   'I benchmark against published seizure-prediction work, such as Tsiouris et al. (2018), who report <strong>&gt;99% sensitivity</strong> on public EEG data. That number is theirs, not ours — it’s the bar.',
    'Who it’s for: the roughly <strong>50 million people</strong> living with epilepsy worldwide, for whom a few minutes of warning can mean sitting down instead of falling.',
-   'Then the hard part. In 2026 the team couldn’t hold together. I didn’t drop it: I’m finishing the <strong>software side on my own</strong>, aiming for the end of 2026.'
+   'Then the hard part. In 2026 the team couldn’t hold together. I didn’t put the light down: I’m finishing the <strong>software side on my own</strong>, aiming for the end of 2026.'
   ],
-  stats:[['₹40,000','funding secured'],['50M','people with epilepsy'],['Dec 2026','final review'],['1','person still building']],
+  stats:[['₹40,000','funding secured'],['50M','people with epilepsy'],['Dec 2026','final review'],['1','person still carrying it']],
   demo:'eeg',demoTitle:'Watch for the warning',
   plain:'<b>In plain words:</b> brain signals get busier and more rhythmic in the minutes before some seizures. The model reads a short sliding window of signal (the highlighted box) again and again, and raises its hand early when the pattern starts to build.',
-  fine:'Synthetic signal. A simple rolling-energy rule stands in for the LSTM here — it shows the idea (watch a window over time, warn early), not our model’s accuracy.',
+  fine:'Synthetic signal. A simple rolling-energy rule stands in for the model here — it shows the idea (watch a window over time, warn early), not our model’s accuracy.',
   bunny:'Press “Add a warning pattern” and watch the meter climb before the big spike.'},
- vault:{kicker:'Pin 6 · ICAISDA 2026 (Springer) · accepted · and BCSE418L Explainable AI',title:'Vault of Explanations',
+ vault:{kicker:'Pin 6 · ICAISDA 2026 (Springer) · Puducherry Technological University · accepted · first author',title:'Vault of Explanations',
   not:'Explainable AI for EEG.',
-  but:'If a model says “seizure”, a clinician should be able to see why. This work chooses which EEG features to keep by asking more than one explanation method — and checking whether they agree.',
+  but:'Every EEG window comes with 575 measurements. SFMCFS, my feature-selection method, decides which few are worth keeping — and every alert the model raises names the measures behind it.',
   beats:[
-   'Co-authored, with three others, <strong>“An Explainable EEG Seizure Detection Framework Using Sequential Fuzzy Multi-Criteria Feature Selection”</strong> — accepted at ICAISDA 2026 (Springer).',
-   'For my Explainable AI course (BCSE418L, Dr. Manikandan G), I extended that line of work into <strong>SFMCFS</strong>: a <strong>CNN-LSTM hybrid with attention</strong>, explained with <strong>SHAP</strong> and <strong>LIME</strong>.',
-   'The twist: instead of trusting one explainer, I <strong>measure how much SHAP and LIME agree</strong>, and let that agreement guide which features survive. When two different methods point at the same signal, it’s easier to believe.'
+   'First author of <strong>“An Explainable EEG Seizure Detection Framework Using Sequential Fuzzy Multi-Criteria Feature Selection”</strong>, accepted at ICAISDA 2026 (Springer).',
+   '<span class="tag">The method</span>SFMCFS grades every feature on three things — <strong>relevance</strong>, <strong>class separation</strong> and <strong>redundancy</strong> — and fuses them into one score through <strong>27 fuzzy rules</strong>. It picks features one at a time, re-checking redundancy against what it already chose, to narrow <strong>575 features per window</strong> to a compact, non-redundant set.',
+   '<span class="tag">The result</span><strong>95.32% accuracy</strong> and <strong>0.989 ROC-AUC</strong> with XGBoost on the CHB-MIT dataset (<strong>45,737 windows</strong>) — and it improved accuracy for <strong>all 5 classifiers</strong> we tried (KNN, Random Forest, XGBoost, LSTM, GRU) over their baselines.',
+   '<span class="tag">The why</span><strong>SHAP</strong> explains the model overall; <strong>LIME</strong> explains each individual alert. So a seizure alert never arrives alone — it says which EEG measures raised it.'
   ],
-  stats:[['2','explainers cross-checked'],['4','authors'],['CNN·LSTM','+ attention'],['Springer','ICAISDA 2026']],
-  demo:'xai',demoTitle:'Do the explainers agree?',
-  plain:'<b>In plain words:</b> each bar says how much a feature mattered to the model’s decision, according to one explainer. Pick how many top features to keep. The ones <b>both</b> explainers rank highly are the ones we trust and keep.',
-  fine:'Feature names and scores are illustrative — they show the method, not the paper’s results.',
-  bunny:'Slide “keep top” up and down — watch which features both explainers agree on.'},
+  stats:[['575','EEG features per window'],['27','fuzzy rules'],['95.32%','accuracy (XGBoost)'],['0.989','ROC-AUC'],['45,737','windows (CHB-MIT)'],['5 / 5','classifiers improved']],
+  demo:'xai',demoTitle:'Run SFMCFS yourself',
+  plain:'<b>In plain words:</b> imagine hiring a small team from 575 applicants. You want people who are useful (relevance), who clearly tell seizure from normal (separation), and who don’t just repeat someone already hired (redundancy). Fuzzy rules let “fairly useful, very distinct, a bit repetitive” count instead of a strict yes/no. Then you hire one at a time, re-checking who’s repetitive after each hire.',
+  fine:'Feature names, scores and EEG windows in this demo are illustrative — they show how the method works, not the paper’s data. The real results are in the numbers on this page.',
+  bunny:'Start on “Score”, then hit “Run all” on “Select” — and see how redundancy knocks out a strong feature.'},
  eden:{kicker:'Pin 7 · the summit · Summer 2027',title:'Eden',
   not:'Seeking opportunities.',
   but:'An AI/ML internship for Summer 2027, where the problem is specific, the users are real, and I get to keep learning from people better than me.',
   beats:[
    '<span class="tag">Finishing</span>The seizure-prediction software, by the end of 2026.',
-   '<span class="tag">Learning</span>Deep Learning Specialization (DeepLearning.AI) · IBM Generative AI Professional Certificate (in progress).',
+   '<span class="tag">Building now</span>A <strong>Legal Guidance System</strong> — an ML system that maps a plain-language case description to rights and next steps under Indian law, for common, low-complexity cases.',
+   '<span class="tag">Learning</span>IBM Generative AI Professional Certificate (expected December 2026) · PyTorch.',
    '<span class="tag">Practising</span>Data structures &amp; algorithms, CS fundamentals, and a lot of code — every week.'
   ],
   stats:[['2027','summer internship'],['AI/ML','where I want to build']],
@@ -627,14 +672,15 @@ const C={
   bunny:'This is the top of the map… for now. Send a paper boat?'}
 };
 
+let panelOpen=false, current=null, cleanup=null, busy=false;
+
 /* build pins + labels */
 const pinsEl=$('#pins');
 ORDER.forEach((id,i)=>{const r=R[id];
   const pin=document.createElement('button'); pin.className='pin'; pin.dataset.id=id; pin.style.cssText=`left:${r.pin[0]/10.8}%;top:${r.pin[1]/11.61}%;--c:${r.c};--d:${i*.35}s`;
   pin.setAttribute('aria-label',`Chapter ${i+1}: ${r.name} — ${r.sub}`); pin.innerHTML=`<span class="in"><i>${i+1}</i></span>`;
   const lbl=document.createElement('button'); lbl.className='lbl'; lbl.dataset.id=id; lbl.tabIndex=-1; lbl.setAttribute('aria-hidden','true');
-  const lx=(innerWidth<600&&id==='forest')?168:r.lbl[0];
-  lbl.style.cssText=`left:${lx/10.8}%;top:${r.lbl[1]/11.61}%;--c:${r.c};--w:${r.w}cqw`; lbl.innerHTML=`<span class="in">${r.name}<small>${r.sub}</small></span>`;
+  lbl.style.cssText=`left:${r.lbl[0]/10.8}%;top:${r.lbl[1]/11.61}%;--c:${r.c};--w:${r.w}cqw`; lbl.innerHTML=`<span class="in">${r.name}<small>${r.sub}</small></span>`;
   pinsEl.append(lbl,pin);
   [pin,lbl].forEach(el=>{el.addEventListener('click',()=>openRegion(id));
     el.addEventListener('pointerenter',()=>{$$(`[data-id="${id}"]`,pinsEl).forEach(x=>x.classList.add('hot'));});
@@ -642,25 +688,59 @@ ORDER.forEach((id,i)=>{const r=R[id];
 });
 gsap.set('.pin,.lbl',{xPercent:-50,yPercent:-50});
 
-/* the route: a smooth curve through the pins, in chapter order */
+/* ---------------- the map journey: the camera follows the route as you scroll ---------------- */
+const follow=$('#follow'), cam=$('#cam'), pathEl=$('#routeReveal'), headEl=$('#routeHead'), cap=$('#mapCap');
+let MW=0,MH=0,mapP=0,routeLen=0,pinFrac=[],lastCap=-2;
 (()=>{const P=ORDER.map(id=>R[id].pin); let d=`M${P[0][0]},${P[0][1]}`;
   for(let i=0;i<P.length-1;i++){const p0=P[i-1]||P[i],p1=P[i],p2=P[i+1],p3=P[i+2]||p2;
     d+=` C${p1[0]+(p2[0]-p0[0])/6},${p1[1]+(p2[1]-p0[1])/6} ${p2[0]-(p3[0]-p1[0])/6},${p2[1]-(p3[1]-p1[1])/6} ${p2[0]},${p2[1]}`;}
   ['routeReveal','routeGlow','routeDots'].forEach(i=>$('#'+i).setAttribute('d',d));
-  const L=$('#routeReveal').getTotalLength(); gsap.set('#routeReveal',{strokeDasharray:L,strokeDashoffset:L});
+  routeLen=pathEl.getTotalLength(); gsap.set(pathEl,{strokeDasharray:routeLen,strokeDashoffset:routeLen});
+  const S=[];for(let k=0;k<=600;k++){const pt=pathEl.getPointAtLength(routeLen*k/600);S.push([pt.x,pt.y]);}
+  pinFrac=P.map(p=>{let bi=0,bd=1e9;S.forEach((s,k)=>{const dd=(s[0]-p[0])**2+(s[1]-p[1])**2;if(dd<bd){bd=dd;bi=k;}});return bi/600;});
 })();
-
-gsap.timeline({scrollTrigger:{trigger:'#map',start:'top 65%',once:true}})
+const isSmall=()=>innerWidth<600;
+function sizeMap(){const vw=innerWidth,vh=innerHeight;
+  MW=Math.min(vw*(isSmall()?.98:.94),(vh-(isSmall()?150:84))*1080/1161,1160); MH=MW*1161/1080;
+  cam.style.width=MW+'px'; cam.style.height=MH+'px';}
+const fitView=()=>({x:(innerWidth-MW)/2,y:(innerHeight-MH)/2+(isSmall()?-26:20),scale:1});
+function viewAt(mx,my,z,free){const vw=innerWidth,vh=innerHeight;let x=vw/2-z*mx,y=vh/2-z*my;
+  if(!free){const w=z*MW,h=z*MH;x=w>=vw?clamp(x,vw-w,0):(vw-w)/2;y=h>=vh?clamp(y,vh-h,0):(vh-h)/2;}
+  return {x,y,scale:z};}
+const mix=(a,b,t)=>({x:a.x+(b.x-a.x)*t,y:a.y+(b.y-a.y)*t,scale:a.scale+(b.scale-a.scale)*t});
+const ez=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+const followZ=()=>isSmall()?2.3:1.8;
+const headAt=q=>{const pt=pathEl.getPointAtLength(routeLen*clamp(q,0,1));return [pt.x/1080*MW,pt.y/1161*MH,pt.x,pt.y];};
+const routeQ=p=>clamp((p-.1)/.62,0,1);
+function viewFor(p){const Z=followZ();
+  if(p<.1){const [hx,hy]=headAt(0);return mix(fitView(),viewAt(hx,hy,Z),ez(p/.1));}
+  if(p<.72){const [hx,hy]=headAt(routeQ(p));return viewAt(hx,hy,Z);}
+  if(p<.84){const [hx,hy]=headAt(1);return mix(viewAt(hx,hy,Z),fitView(),ez((p-.72)/.12));}
+  return fitView();}
+function setCap(k){if(k===lastCap)return;lastCap=k;
+  let html;
+  if(k===-1) html=`<p class="k">The map</p><h3>Seven places, one route.</h3><p>Keep scrolling — I’ll walk you along it.</p>`;
+  else if(k===99) html=`<p class="k">All seven are lit</p><h3>Pick a place.</h3><p>Tap any glowing pin to open its chapter.</p>`;
+  else {const id=ORDER[k],r=R[id];html=`<p class="k" style="color:${r.c}">Pin ${k+1} of 7 · ${r.sub}</p><h3>${r.name}</h3><p>Tap to open this chapter →</p>`;}
+  cap.dataset.k=k; cap.innerHTML=html; gsap.fromTo(cap,{opacity:0,y:12},{opacity:1,y:0,duration:.5,ease:'power3.out'});}
+function applyMap(p){mapP=p; if(panelOpen||busy) return;
+  gsap.set(follow,viewFor(p));
+  const q=routeQ(p); gsap.set(pathEl,{strokeDashoffset:routeLen*(1-q)});
+  const [, ,hx,hy]=headAt(q); headEl.setAttribute('cx',hx); headEl.setAttribute('cy',hy); headEl.style.opacity=(q>0&&q<1)?1:0;
+  let reached=-1; const all=p>=.72;
+  ORDER.forEach((id,i)=>{const on=all||q>=pinFrac[i]-.004; if(on) reached=i; $$(`[data-id="${id}"]`,pinsEl).forEach(x=>x.classList.toggle('off',!on));});
+  setCap(p<.08?-1:all?99:reached);}
+cap.addEventListener('click',()=>{const k=+cap.dataset.k; if(k>=0&&k<ORDER.length) openRegion(ORDER[k]);});
+sizeMap();
+ScrollTrigger.create({trigger:'#map',start:'top top',end:'bottom bottom',onUpdate:s=>applyMap(s.progress),onRefresh:s=>applyMap(s.progress)});
+ScrollTrigger.addEventListener('refreshInit',sizeMap);
+applyMap(0);
+gsap.timeline({scrollTrigger:{trigger:'#map',start:'top 80%',once:true}})
   .from('.map-art',{opacity:0,scale:1.06,filter:'blur(14px)',duration:1.7,ease:'power3.out',clearProps:'filter'})
-  .from('.logo-cover',{opacity:0,y:24,filter:'blur(8px)',duration:1.1,ease:'power3.out',clearProps:'filter'},.5)
-  .to('#routeReveal',{strokeDashoffset:0,duration:2.6,ease:'power2.inOut'},.8)
-  .from('.lbl',{opacity:0,y:20,filter:'blur(8px)',duration:.9,stagger:.2,ease:'power3.out',clearProps:'filter'},1.0)
-  .from('.pin',{scale:0,opacity:0,duration:.7,stagger:.2,ease:'back.out(2.2)'},1.1)
-  .from('.map-hint',{opacity:0,y:10,duration:.8},2.4);
+  .from('.logo-cover',{opacity:0,y:24,filter:'blur(8px)',duration:1.1,ease:'power3.out',clearProps:'filter'},.5);
 
 /* ---------------- open / close chapters (zoom, then reveal) ---------------- */
-let panelOpen=false, current=null, cleanup=null, busy=false;
-const panel=$('#panel'), chapter=$('#chapter'), cam=$('#cam');
+const panel=$('#panel'), chapter=$('#chapter');
 
 function renderChapter(id){
   if(cleanup){cleanup();cleanup=null;}
@@ -689,21 +769,16 @@ function renderChapter(id){
 function revealChapter(delay=0){
   gsap.fromTo($$('.rv',chapter),{opacity:0,y:34,filter:'blur(10px)'},{opacity:1,y:0,filter:'blur(0px)',duration:.9,stagger:.06,ease:'power3.out',delay,clearProps:'filter,transform'});
 }
-function camTo(id,S){
-  const W=cam.offsetWidth,H=cam.offsetHeight,p=R[id].pin;
-  const px=p[0]/1080*W, py=p[1]/1161*H;
-  return {x:W/2-S*px, y:H/2-S*py, scale:S};
-}
+const zoomFor=id=>{const p=R[id].pin;return viewAt(p[0]/1080*MW,p[1]/1161*MH,isSmall()?4:3.2,true);};
 function openRegion(id){
   if(busy||panelOpen) return; busy=true; current=id; panelOpen=true;
+  // make sure the map is pinned in view before diving in
+  const m=$('#map'),top=m.offsetTop,end=top+m.offsetHeight-innerHeight,y=clamp(scrollY,top,end);
+  lenis?lenis.scrollTo(y,{immediate:true,force:true}):scrollTo(0,y);
   lenis&&lenis.stop();
-  // centre the map in view before diving in
-  const top=$('#map').getBoundingClientRect().top;
-  if(Math.abs(top)>4){ lenis?lenis.scrollTo('#map',{immediate:true,force:true}):scrollTo(0,scrollY+top); }
   $$(`[data-id="${id}"]`,pinsEl).forEach(x=>x.classList.add('hot'));
   const tl=gsap.timeline({onComplete:()=>{busy=false;}});
-  tl.set(cam,{transformOrigin:'0 0'})
-    .to(cam,{...camTo(id,3.1),duration:reduce?.01:1.35,ease:'power3.inOut'},0)
+  tl.to(follow,{...zoomFor(id),duration:reduce?.01:1.35,ease:'power3.inOut'},0)
     .to('#mapVeil',{opacity:1,duration:.7,ease:'power1.in'},reduce?0:.75)
     .add(()=>{renderChapter(id); gsap.set(panel,{visibility:'visible'});},reduce?0:1.0)
     .fromTo(panel,{opacity:0},{opacity:1,duration:.7,ease:'power2.out'},reduce?0:1.0)
@@ -716,22 +791,22 @@ function switchRegion(id){
   gsap.to(chapter,{opacity:0,y:-20,filter:'blur(8px)',duration:.45,ease:'power2.in',onComplete:()=>{
     gsap.to('.panel-bg img',{opacity:1,duration:.9,ease:'power2.out',delay:.05});
     $$('.hot',pinsEl).forEach(x=>x.classList.remove('hot'));
-    current=id; gsap.set(cam,camTo(id,3.1)); renderChapter(id);
+    current=id; gsap.set(follow,zoomFor(id)); renderChapter(id);
     gsap.set(chapter,{opacity:1,y:0,filter:'none'}); revealChapter(0); busy=false;}});
 }
 function closeRegion(instant){
   if(!panelOpen) return; busy=true;
   if(cleanup){cleanup();cleanup=null;}
-  const done=()=>{panelOpen=false;busy=false;lenis&&lenis.start();$$('.hot',pinsEl).forEach(x=>x.classList.remove('hot'));buddy.setContext('map',true);};
-  if(instant){gsap.set(panel,{opacity:0,visibility:'hidden'});gsap.set(cam,{x:0,y:0,scale:1});gsap.set('#mapVeil',{opacity:0});done();return;}
+  const done=()=>{panelOpen=false;busy=false;lenis&&lenis.start();$$('.hot',pinsEl).forEach(x=>x.classList.remove('hot'));buddy.setContext('map',true);applyMap(mapP);};
+  if(instant){gsap.set(panel,{opacity:0,visibility:'hidden'});gsap.set('#mapVeil',{opacity:0});done();return;}
   gsap.timeline({onComplete:done})
     .to(panel,{opacity:0,duration:.5,ease:'power2.in'},0)
     .set(panel,{visibility:'hidden'},.5)
     .to('#mapVeil',{opacity:0,duration:.6},.35)
-    .to(cam,{x:0,y:0,scale:1,duration:reduce?.01:1.2,ease:'power3.inOut'},.35);
+    .to(follow,{...viewFor(mapP),duration:reduce?.01:1.2,ease:'power3.inOut'},.35);
 }
 addEventListener('keydown',e=>{if(e.key==='Escape'&&panelOpen) closeRegion();});
-addEventListener('resize',()=>{ if(panelOpen&&current) gsap.set(cam,camTo(current,3.1)); });
+addEventListener('resize',()=>{ sizeMap(); if(panelOpen&&current) gsap.set(follow,zoomFor(current)); else applyMap(mapP); });
 
 /* ---------------- demos ---------------- */
 function canvas2d(cv,W,H){const dpr=Math.min(2,devicePixelRatio||1);cv.width=W*dpr;cv.height=H*dpr;const ctx=cv.getContext('2d');ctx.scale(dpr,dpr);return ctx;}
@@ -895,29 +970,107 @@ const DEMOS={
 
  /* ---- SHAP vs LIME agreement ---- */
  xai(root,c){
-  const F=['Delta power','Theta power','Alpha power','Beta power','Gamma power','Line length','Spectral entropy','Hjorth mobility','Hjorth complexity','Variance','Kurtosis','Zero crossings'];
-  const S=[.62,.48,.21,.33,.71,.80,.55,.40,.29,.45,.18,.12], L=[.58,.30,.25,.41,.66,.74,.36,.52,.22,.49,.27,.10];
-  let mode='both';
-  root.innerHTML=`<div class="row" style="margin-top:0;justify-content:space-between"><div class="seg"><button data-m="shap">SHAP</button><button data-m="lime">LIME</button><button data-m="both" class="on">Both</button></div></div>
-   <div class="ctl"><label>Keep the top <b class="kv"></b> features</label><input type="range" min="3" max="8" value="5"></div>
-   <div class="legend"><span><i style="background:#a9b6ff"></i>SHAP</span><span><i style="background:#f6b8e6"></i>LIME</span><span style="color:var(--cream)">bright = kept by both</span></div>
-   <div class="xrows" style="height:${F.length*28}px">${F.map(f=>`<div class="xrow"><span>${f}</span><span class="bars"><i class="s"></i><i class="l"></i></span></div>`).join('')}</div>
-   <div class="score"><b class="pc">0%</b><span class="vd"></span></div>`;
-  const rows=$$('.xrow',root),sl=$('input',root);
-  const rank=a=>a.map((v,i)=>[v,i]).sort((x,y)=>y[0]-x[0]).map(x=>x[1]);
-  const upd=()=>{const k=+sl.value;$('.kv',root).textContent=k;
-    const ts=new Set(rank(S).slice(0,k)),tl=new Set(rank(L).slice(0,k));
-    const key=mode==='shap'?S:mode==='lime'?L:S.map((v,i)=>(v+L[i])/2); const ord=rank(key);
-    const agree=[...ts].filter(i=>tl.has(i));
-    ord.forEach((fi,pos)=>{const r=rows[fi];r.style.top=(pos*28)+'px';
-      const [bs,bl]=$$('i',r);bs.style.width=mode==='lime'?'0%':(S[fi]*100)+'%';bl.style.width=mode==='shap'?'0%':(L[fi]*100)+'%';
-      const inTop=mode==='shap'?ts.has(fi):mode==='lime'?tl.has(fi):(ts.has(fi)||tl.has(fi));
-      r.classList.toggle('top',inTop); r.classList.toggle('keep',ts.has(fi)&&tl.has(fi));});
-    $('.pc',root).textContent=Math.round(agree.length/k*100)+'%';
-    $('.vd',root).innerHTML=`agreement · both pick <b>${agree.length}</b> of their top ${k} → keep ${agree.map(i=>F[i]).join(', ')}`;};
-  sl.oninput=upd;
-  $$('.seg button',root).forEach(b=>b.onclick=()=>{mode=b.dataset.m;$$('.seg button',root).forEach(x=>x.classList.toggle('on',x===b));upd();});
-  requestAnimationFrame(upd);
+  /* SFMCFS in miniature: 3 criteria → 3 fuzzy levels each → 27 rules → one score; pick features one at a time */
+  const F=[['Line length',.86,.82],['Variance',.80,.74],['Delta power',.74,.70],['Gamma power',.70,.64],['Spectral entropy',.62,.66],['Theta power',.58,.55],
+           ['Hjorth mobility',.55,.50],['Zero crossings',.48,.42],['Beta power',.45,.40],['Hjorth complexity',.40,.45],['Kurtosis',.35,.38],['Alpha power',.30,.28]];
+  const CP={'0-1':.88,'0-2':.50,'1-2':.55,'2-5':.62,'0-3':.45,'3-8':.66,'3-4':.35,'4-6':.40,'6-7':.78,'6-9':.60,'5-11':.50};
+  const corr=(a,b)=>a===b?1:(CP[`${a}-${b}`]??CP[`${b}-${a}`]??.12);
+  const mu=v=>[Math.max(0,1-v/.5),Math.max(0,1-Math.abs(v-.5)/.5),Math.max(0,(v-.5)/.5)];
+  const LV=['low','med','high'];
+  const fuzzy=(r,s,d)=>{const a=mu(r),b=mu(s),e=mu(d);let num=0,den=0;const fire=[];
+    for(let k=0;k<3;k++)for(let i=0;i<3;i++)for(let j=0;j<3;j++){const w=Math.min(a[i],b[j],e[k]),out=(i+j+2*(2-k))/8;fire.push([w,out]);num+=w*out;den+=w;}
+    return {score:den?num/den:0,fire};};
+  const red=(i,sel)=>sel.length?Math.max(...sel.map(j=>corr(i,j))):0;
+  let chosen=[],stopped=false,tab='score',expl=2,mode='lime',timers=[];
+
+  root.innerHTML=`<div class="seg xtabs"><button data-t="score" class="on">1 · Score</button><button data-t="select">2 · Select</button><button data-t="explain">3 · Explain</button></div>
+   <div class="xpane" data-p="score">
+     <div class="ctl"><label>Feature</label><select class="fsel">${F.map((f,i)=>`<option value="${i}">${f[0]}</option>`).join('')}</select></div>
+     <div class="crits">${['Relevance','Class separation','Redundancy'].map((n,k)=>`<div class="crit"><div class="ctop"><span>${n}</span><b class="cv"></b></div><input type="range" min="0" max="1" step=".01" data-k="${k}"><div class="lv"><i>low</i><i>med</i><i>high</i></div></div>`).join('')}</div>
+     <p class="fine redn" style="margin-top:2px"></p>
+     <div class="rules">${[0,1,2].map(k=>`<div class="rblk"><p>redundancy <b>${LV[k]}</b></p><div class="rg">${[2,1,0].map(i=>[0,1,2].map(j=>`<span data-r="${k*9+i*3+j}"></span>`).join('')).join('')}</div></div>`).join('')}</div>
+     <p class="fine" style="margin-top:4px">each square = one of the 27 rules · rows: relevance high→low · columns: separation low→high · brighter = firing harder</p>
+     <div class="score"><b class="pc fs">0.00</b><span>fuzzy score</span></div>
+   </div>
+   <div class="xpane" data-p="select" hidden>
+     <div class="ctl"><label>Stop when the best remaining score drops below <b class="tv"></b></label><input type="range" class="thr" min=".35" max=".7" step=".01" value=".5"></div>
+     <div class="row" style="margin-top:6px"><button class="btn st">Pick next</button><button class="btn ghost ra">Run all</button><button class="btn ghost rs">Reset</button></div>
+     <div class="flist"></div>
+     <p class="read sres" style="margin-top:10px"></p>
+   </div>
+   <div class="xpane" data-p="explain" hidden>
+     <div class="row" style="margin-top:0;justify-content:space-between"><div class="seg wins"><button data-w="0">Calm</button><button data-w="1">Building</button><button data-w="2" class="on">Seizure</button></div>
+       <div class="seg modes"><button data-m="lime" class="on">LIME · this alert</button><button data-m="shap">SHAP · overall</button></div></div>
+     <canvas class="dc" style="margin-top:12px"></canvas>
+     <div class="meter"><div class="mfill"></div><span class="mlabel"></span></div>
+     <div class="xbars"></div>
+     <p class="read why" style="margin-top:10px"></p>
+   </div>`;
+
+  /* ---- tabs ---- */
+  const show=t=>{tab=t;$$('.xtabs button',root).forEach(b=>b.classList.toggle('on',b.dataset.t===t));$$('.xpane',root).forEach(p=>p.hidden=p.dataset.p!==t);
+    if(t==='score')syncScore(true); if(t==='select')drawList(); if(t==='explain')drawExplain();};
+  $$('.xtabs button',root).forEach(b=>b.onclick=()=>show(b.dataset.t));
+
+  /* ---- 1 · score ---- */
+  const fsel=$('.fsel',root),sl=$$('.crit input',root),cells=$$('.rg span',root);
+  const syncScore=(fromFeature)=>{const i=+fsel.value;
+    if(fromFeature){sl[0].value=F[i][1];sl[1].value=F[i][2];sl[2].value=red(i,chosen.filter(j=>j!==i));}
+    const v=sl.map(s=>+s.value);
+    $$('.crit',root).forEach((el,k)=>{$('.cv',el).textContent=v[k].toFixed(2);const m=mu(v[k]);$$('.lv i',el).forEach((t,q)=>t.style.setProperty('--m',m[q].toFixed(2)));});
+    $('.redn',root).textContent=chosen.length?`redundancy = strongest overlap with the ${chosen.length} feature${chosen.length>1?'s':''} already chosen in step 2`:'nothing chosen yet, so nothing to be redundant with — pick some in step 2 and come back';
+    const {score,fire}=fuzzy(v[0],v[1],v[2]);
+    cells.forEach(el=>{const [w,out]=fire[+el.dataset.r];el.style.setProperty('--w',w.toFixed(3));el.style.setProperty('--o',out.toFixed(2));el.title=`fires ${w.toFixed(2)} → says ${out.toFixed(2)}`;});
+    $('.fs',root).textContent=score.toFixed(2);};
+  fsel.onchange=()=>syncScore(true); sl.forEach(s=>s.oninput=()=>syncScore(false));
+
+  /* ---- 2 · select, one at a time ---- */
+  const thr=$('.thr',root),list=$('.flist',root);
+  list.innerHTML=F.map((f,i)=>`<div class="frow" data-i="${i}"><span class="fn">${f[0]}</span><span class="fb"><i></i></span><span class="fv"></span><span class="ft"></span></div>`).join('');
+  const rows=$$('.frow',list);
+  const cur=()=>F.map((f,i)=>chosen.includes(i)?null:fuzzy(f[1],f[2],red(i,chosen)).score);
+  const drawList=(hi)=>{const sc=cur();$('.tv',root).textContent=(+thr.value).toFixed(2);
+    rows.forEach((r,i)=>{const k=chosen.indexOf(i),s=sc[i];r.classList.toggle('pick',k>=0);r.classList.toggle('hi',hi===i);
+      $('.fb i',r).style.width=k>=0?'100%':(s*100).toFixed(1)+'%';$('.fv',r).textContent=k>=0?'':s.toFixed(2);
+      const rd=red(i,chosen);$('.ft',r).textContent=k>=0?`#${k+1}`:(chosen.length&&rd>.45?`overlaps ${Math.round(rd*100)}%`:'');});
+    const left=sc.map((s,i)=>[s,i]).filter(x=>x[0]!==null).sort((a,b)=>b[0]-a[0]);
+    $('.sres',root).innerHTML=stopped?`<b>Stopped at ${chosen.length} features.</b> The best remaining score (${left[0]?left[0][0].toFixed(2):'—'}) is below the threshold. In the paper, the same loop narrows 575 features per window.`
+      :chosen.length?`<b>${chosen.length} chosen:</b> ${chosen.map(i=>F[i][0]).join(', ')}. Scores re-computed — redundancy now counts.`:'Every feature starts with zero redundancy. Pick the first one.';};
+  const step=()=>{if(stopped)return false;const sc=cur();let b=-1,bs=-1;sc.forEach((s,i)=>{if(s!==null&&s>bs){bs=s;b=i;}});
+    if(b<0||bs<+thr.value){stopped=true;drawList();return false;}
+    chosen.push(b);drawList(b);gsap.fromTo(rows[b],{backgroundColor:hexA(c,.35)},{backgroundColor:'rgba(0,0,0,0)',duration:1.1});return true;};
+  $('.st',root).onclick=step;
+  $('.ra',root).onclick=()=>{timers.forEach(clearTimeout);timers=[];const go=()=>{if(step())timers.push(setTimeout(go,650));};go();};
+  $('.rs',root).onclick=()=>{timers.forEach(clearTimeout);timers=[];chosen=[];stopped=false;drawList();};
+  thr.oninput=()=>{stopped=false;drawList();};
+
+  /* ---- 3 · explain an alert ---- */
+  const W=360,H=110,ctx=canvas2d($('canvas',root),W,H);
+  const P=[.05,.46,.93], WN=['calm','building up','seizure'];
+  // signed contribution to "seizure" per feature, per window (illustrative)
+  const LIME=[[-.16,-.12,-.10,-.06,-.05,-.04,-.03,-.02,-.01,-.02,-.01,.02],[.10,.06,.08,.03,-.04,.05,.02,.01,.01,.02,.01,-.03],[.24,.15,.17,.12,.10,.06,.05,.03,.02,.03,.02,-.04]];
+  const SHAP=F.map(f=>+(f[1]*.26).toFixed(3));
+  const keepSet=()=>chosen.length?chosen:[0,2,3,4,6];
+  const drawExplain=()=>{
+    let seed=7+expl*13;const rnd=()=>{seed=(seed*16807)%2147483647;return seed/2147483647-.5;};
+    ctx.clearRect(0,0,W,H);ctx.beginPath();
+    for(let x=0;x<W;x++){const t=x/W*4;let y=.3*Math.sin(t*6.28*9.5)+.2*Math.sin(t*6.28*5.7+1)+rnd()*.35;
+      if(expl===1)y+=(x/W)*.9*Math.sin(t*6.28*3);if(expl===2)y+=1.4*Math.sin(t*6.28*3)+Math.pow(Math.max(0,Math.sin(t*6.28*3+.5)),8)*1.6+rnd()*.9;
+      const py=clamp(H/2-y*18,3,H-3);x?ctx.lineTo(x,py):ctx.moveTo(x,py);}
+    ctx.strokeStyle=expl===2?'#ff9d8f':'rgba(251,243,228,.88)';ctx.lineWidth=1.3;ctx.stroke();
+    const p=P[expl];$('.mfill',root).style.width=(p*100)+'%';$('.mlabel',root).textContent=`seizure probability ${Math.round(p*100)}% · ${p>.5?'ALERT':'no alert'}`;
+    const ids=keepSet(),vals=ids.map(i=>[i,mode==='lime'?LIME[expl][i]:SHAP[i]]).sort((a,b)=>Math.abs(b[1])-Math.abs(a[1])),mx=Math.max(...vals.map(v=>Math.abs(v[1])),.01);
+    $('.xbars',root).innerHTML=vals.map(([i,v])=>`<div class="xb"><span>${F[i][0]}</span><span class="xt"><i style="${v>=0?'left:50%':'right:50%'};width:${Math.abs(v)/mx*50}%;background:${mode==='shap'?'#a9b6ff':v>=0?'#ff9d8f':'#7be0a8'}"></i></span><b>${mode==='shap'?v.toFixed(2):(v>0?'+':'')+v.toFixed(2)}</b></div>`).join('');
+    const top=vals.filter(v=>mode==='shap'||(p>.5?v[1]>0:v[1]<0)).slice(0,2).map(v=>F[v[0]][0].toLowerCase());
+    $('.why',root).innerHTML=mode==='shap'?`<b>Overall</b>, the model leans most on ${top.join(' and ')} — that’s SHAP’s global view across all windows.`
+      :p>.5?`<b>Alert raised</b> mostly because ${top.join(' and ')} pushed toward “seizure” in this window.`
+      :`<b>No alert:</b> ${top.join(' and ')} pulled this ${WN[expl]} window away from “seizure”.`;
+    $('.xbars',root).insertAdjacentHTML('afterbegin',`<p class="fine" style="margin:0 0 6px">${chosen.length?'using the features you chose in step 2':'using a default set — choose your own in step 2'} · ${mode==='lime'?'red pushes toward seizure, green away':'mean impact across all windows'}</p>`);};
+  $$('.wins button',root).forEach(b=>b.onclick=()=>{expl=+b.dataset.w;$$('.wins button',root).forEach(x=>x.classList.toggle('on',x===b));drawExplain();});
+  $$('.modes button',root).forEach(b=>b.onclick=()=>{mode=b.dataset.m;$$('.modes button',root).forEach(x=>x.classList.toggle('on',x===b));drawExplain();});
+
+  syncScore(true);drawList();
+  return ()=>timers.forEach(clearTimeout);
  },
 
  /* ---- Eden: contact ---- */
@@ -960,7 +1113,7 @@ const buddy=(()=>{
    hero:['Hi! I’m your travel buddy. I’ll walk you through Parnika’s story — scroll down when you’re ready.','Hear that? That’s “Rain Transform” from Sky. The ♪ button up top turns it off.',`<small>psst… ${dbl} me and I’ll hop</small>`],
    prologue:['This is where it started. Keep scrolling slowly — the birds know the way.'],
    tunnel:['Hold on to your ears — we’re going through!'],
-   map:['Each glowing pin is a chapter. Tap one and we’ll fly in.','The dotted line is the route. Start at pin 1 if you like things in order.'],
+   map:['Keep scrolling — I’ll walk you along the route, one place at a time.','Each glowing pin is a chapter. Tap one and we’ll fly in.'],
    epilogue:['That’s the story so far. Parnika’s email is right there →'],
    credits:['The art belongs to thatgamecompany. Go play Sky! ✦']};
   const IDLE=[`${dbl[0].toUpperCase()+dbl.slice(1)} me and I’ll hop!`,'Every pin on the map has something you can try.','The art is from Sky: Children of the Light — credits on the last page.','I’ve been told I’m the most important part of this website.'];
